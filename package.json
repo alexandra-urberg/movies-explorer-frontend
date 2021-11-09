@@ -10,9 +10,10 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "node-sass": "^6.0.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "node-sass": "^6.0.1"
+    "react-responsive": "^9.0.0-beta.4"
   },
   "scripts": {
     "start": "react-scripts start",
