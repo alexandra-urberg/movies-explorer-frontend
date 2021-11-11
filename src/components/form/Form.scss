@@ -1,0 +1,180 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 31%;
+  margin: $centerPosition;
+  margin: 70px 0 0;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    width: 51.56%;
+    margin: 232px 0 0;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    width: 81.25%;
+    margin: 56px 0 0;
+  }
+}
+.form__head {
+  text-align: left;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    text-align: center;
+  }
+}
+
+.form__logo {
+  background-image: url(../../images/header-logo.svg);
+  background-size: 14px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  margin: 0 0 40px;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    margin: 0 auto 50px;
+  }
+}
+
+.form__title {
+  font-size: 1.5em;
+  line-height: 29px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.form__container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40px 0 70px;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    padding: 80px 0 70px;
+  }
+}
+
+.form__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.form__label {
+  margin: 0 0 20px;
+  padding: 0;
+  text-align: left;
+  &:last-of-type {
+    margin: 0;
+  }
+}
+
+.form__description {
+  font-size: 0.62em;
+  line-height: 12px;
+  font-weight: 400;
+  color: #a0a0a0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.form__input {
+  width: 100%;
+  border: $listStyle;
+  background-color: #f9f9f9;
+  padding: 15px 0 15px;
+  border-radius: 8px;
+
+  font-size: 0.812em;
+  line-height: 16px;
+  font-weight: 400;
+  color: #000;
+}
+
+.form__input-error {
+  box-sizing: border-box;
+  font-size: 0.62em;
+  line-height: 12px;
+  font-weight: 400;
+  padding-top: 10px;
+  font-style: normal;
+  color: #ff0000;
+}
+
+.form__button {
+  width: inherit;
+  padding: 13px 0 15px;
+  text-align: center;
+  background-color: $buttomHover;
+  border: $listStyle;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    padding: 15px 0 15px;
+  }
+}
+
+.form__button-text {
+  text-align: center;
+  font-size: 0.87em;
+  line-height: 17px;
+  font-weight: 500;
+  color: #fff;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: $buttonFontSize;
+    line-height: 15px;
+  }
+}
+
+.form__button_disabled {
+  cursor: not-allowed;
+  pointer-events: $listStyle;
+  opacity: 0.2;
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+}
+
+.form__signIn {
+  margin-top: 179px;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    margin-top: 267px;
+  }
+}
+
+.form__signUp {
+  margin-top: 69px;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    margin-top: 157px;
+  }
+}
+
+.form__route-container {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 16px;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    margin-top: 14px;
+  }
+}
+
+.form__question {
+  text-align: center;
+  font-size: 0.87em;
+  line-height: 17px;
+  font-weight: 400;
+  color: #a0a0a0;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: $buttonFontSize;
+    line-height: 15px;
+  }
+}
+
+.form__link {
+  color: $buttomHover;
+  opacity: $buttonOpaity;
+  text-decoration: $listStyle;
+}
