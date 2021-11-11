@@ -1,0 +1,82 @@
+.popupNavigator {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  transition: all 1s ease 0.2s;
+}
+
+.popupNavigator_is-opened {
+  display: flex;
+  opacity: 1;
+}
+
+.popupNavigator__container {
+  flex-direction: column;
+  width: 67.7%;
+  height: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+  margin-left: 32.3%;
+  padding-top: 13.44px;
+  @media screen and (max-width: 540px) {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.popupNavigator__close-button {
+  position: absolute;
+  background-image: url(../../images/delete__icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  background-size: 22px 22px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  right: 13.44px;
+  transition: 0.2s ease;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+}
+
+.popupNavigator__navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popupNavigator__title {
+  display: flex;
+  font-size: $titleMinSize;
+  line-height: 21.7px;
+  font-weight: 500;
+  &:last-of-type {
+    font-size: 0.875em;
+    line-height: 16px;
+    margin-right: 13px;
+  }
+}
+
+.popupNavigator__active {
+  border-bottom: 2px solid #000;
+}
+
+.popupNavigator__link-navigation {
+  display: flex;
+  margin-bottom: 24px;
+  &:first-of-type {
+    margin-top: 131px;
+  }
+  &:nth-of-type(4) {
+    margin-top: 444px;
+  }
+}
