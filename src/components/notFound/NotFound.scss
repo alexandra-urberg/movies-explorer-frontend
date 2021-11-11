@@ -1,0 +1,61 @@
+.notFound {
+  width: 100%;
+  margin: 246px auto 60px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    margin: 408px auto 222px;
+  }
+  @media screen and (max-width: 460px) {
+    margin: 329px auto 30px;
+  }
+}
+
+.notFound__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.notFound__box {
+  margin: $centerPosition;
+}
+
+.notFound__status {
+  font-size: 8.75em;
+  font-weight: 400;
+  line-height: 169px;
+  margin: 0;
+  @media screen and (max-width: 460px) {
+    font-size: 5em;
+    line-height: 97px;
+  }
+}
+
+.notFound__message {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 19px;
+  text-align: center;
+  margin: 5px 0 0;
+  @media screen and (max-width: 460px) {
+    font-size: $buttonFontSize;
+    line-height: 15px;
+    margin: 10px 0 0;
+  }
+}
+
+.notFound__link {
+  font-size: 0.875em;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  color: $buttomHover;
+  margin-top: 184px;
+  @media screen and (max-width: 460px) {
+    font-size: $buttonFontSize;
+    line-height: 15px;
+    margin-top: 284px;
+  }
+}
