@@ -26,7 +26,7 @@ function Login() {
     const { value } = e.target;
     setPassword(value);
 
-    if (value.length < 6 || value.includes(" ")) {
+    if (value.length < 6 || value.includes("")) {
       validationErrors.password =
         "Enter the correct password without spaces and more than 6 symbols";
     } else {
