@@ -4,11 +4,8 @@ import Navigation from "../navigation/Navigation";
 function Header(props) {
   return (
     <header className="header">
-      <Link to="/">
-        <div className="header__logo background-color"></div>
-      </Link>
-      <Navigation 
-       onPopupOpen={props.onPopupOpen}/>
+      <Link to="/" className="header__logo background-color" />
+      <Navigation onPopupOpen={props.onPopupOpen} />
     </header>
   );
 }
