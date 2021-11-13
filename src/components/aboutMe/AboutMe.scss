@@ -1,0 +1,134 @@
+.aboutMe {
+  padding: 110px 0 100px;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    padding: 90px 0;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    padding: 70px 0 69px;
+  }
+}
+
+.aboutMe__container {
+  margin: 66px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: fit-content(600px) fit-content(270px);
+  grid-template-areas: "info photo";
+  column-gap: 269px;
+  grid-column: 1;
+  grid-row: 1;
+  @media screen and (min-width: 641px) and (max-width: 800px) {
+    grid-template-columns: fit-content(364px) fit-content(255px);
+    column-gap: 7.5%;
+  }
+  @media screen and (min-width: 320px) and (max-width: 640px) {
+    justify-content: center;
+    grid-template-columns: fit-content(292px);
+    grid-template-areas:
+      "photo"
+      "info";
+    row-gap: 40px;
+    margin: 60px 0 0;
+  }
+}
+
+.aboutMe__info {
+  grid-area: info;
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+}
+
+.aboutMe__name {
+  font-size: $titleFontSize;
+  line-height: 58px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin-bottom: 18px;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    font-size: $titleFontSizeMid;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: 1.87em;
+    line-height: 36px;
+    margin-bottom: 20px;
+  }
+}
+
+.aboutMe__field {
+  font-size: 1.125em;
+  line-height: 20px;
+  font-weight: 500;
+  margin-bottom: 26px;
+  padding: 0;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    font-size: $buttonFontSize;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: 0.687em;
+    line-height: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+.aboutMe__description {
+  font-size: $subtitleFontSize;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 0;
+  margin-bottom: 101px;
+  mix-blend-mode: normal;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    font-size: $buttonFontSize;
+    line-height: 18px;
+    margin-bottom: 87px;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: 0.687em;
+    line-height: 16px;
+    margin-bottom: 40px;
+  }
+}
+.aboutMe__links {
+  display: flex;
+}
+
+.aboutMe__link {
+  text-decoration: $listStyle;
+  font-size: $subtitleFontSize;
+  line-height: 17px;
+  color: $fontColor;
+  &:first-child {
+    margin-right: 20px;
+  }
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    &:first-child {
+      margin-right: 26px;
+    }
+  }
+}
+.aboutMe__photo {
+  grid-area: photo;
+  background-image: url(../../images/Vitaly__photo.jpg);
+  background-size: 270px 327px;
+  height: 327px;
+  width: 270px;
+  background-repeat: no-repeat;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    background-size: 255px 307px;
+    height: 307px;
+    width: 255px;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    background-size: 292px 352px;
+    height: 352px;
+    width: 292px;
+  }
+}

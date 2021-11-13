@@ -1,0 +1,114 @@
+.header {
+  width: 89.1%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  @media screen and (min-width: 461px) and (max-width: 800px) {
+    width: 92.2%;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    width: 91.25%;
+  }
+}
+
+.header__logo {
+  background-image: url(../../images/header-logo.svg);
+  background-size: 14px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  margin: 18px 0;
+}
+
+.background-color {
+  background-color: $buttomHover;
+}
+
+.header__navigation {
+  display: flex;
+  list-style: $listStyle;
+  margin: auto 0;
+}
+
+.header__link-navigation {
+  display: flex;
+  margin-right: 20px;
+  &:nth-of-type(2) {
+    margin-right: 0;
+  }
+  &:nth-of-type(3) {
+    margin-right: 13px;
+    margin-left: 50px;
+  }
+}
+
+.header__link {
+  font-size: $buttonFontSize;
+  font-weight: 500;
+  line-height: $buttonLineHeight;
+  color: $fontColor;
+  text-decoration: $listStyle;
+  cursor: $cursor;
+  margin: auto 0;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    font-size: $buttonFontSizeMin;
+  }
+}
+
+.header__login {
+  background-color: $buttomHover;
+  padding: 8px 20px;
+  border-radius: 3px;
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    padding: 5px 12px;
+  }
+}
+
+.header__font-size {
+  font-size: $subtitleFontSize;
+  line-height: 18px;
+}
+
+.header__font-weight {
+  font-weight: 400;
+  border-radius: 3px;
+}
+
+.header__icon {
+  background-image: url(../../images/icon.svg);
+  background-position: 9.75px 9.81px;
+  background-size: 10.38px 10.67px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.header__sandwich {
+  margin: auto 0;
+}
+
+.header__sandwich-icon {
+  background-image: url(../../images/sandwich__icon.svg);
+  background-size: 28px 31px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: $listStyle;
+  background-color: inherit;
+  width: 44px;
+  height: 44px;
+  cursor: $cursor;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (min-width: 320px) and (max-width: 460px) {
+    background-size: 22px 26px;
+    height: 43px;
+  }
+}

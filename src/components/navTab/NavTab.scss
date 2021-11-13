@@ -1,0 +1,40 @@
+.navTab {
+    display: flex;
+    justify-content: center;
+}
+
+.navTab__button {
+    width: 96px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $buttonsColor;
+    border: $listStyle;
+    border-radius: $buttonBordRad;
+    &:nth-child(2) {
+        margin: 0 10px 0 10px;
+    }
+    &:hover {
+        opacity: $buttonOpaity;
+        cursor: $cursor;
+    }
+    @media screen and (min-width: 320px) and (max-width: 460px) {
+        width: 82px;
+        height: 26px;
+        &:nth-child(2) {
+            margin: 0 6px 0 6px;
+        }
+    }
+}
+
+.navTab__link {
+    font-size: $buttonFontSize;
+    line-height: $buttonLineHeight;
+    font-weight: 500;
+    text-decoration: $listStyle;
+    color: $fontColor;
+    @media screen and (min-width: 320px) and (max-width: 460px) {
+        font-size: $buttonFontSizeMin;
+    }
+}
