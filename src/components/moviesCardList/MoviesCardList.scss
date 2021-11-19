@@ -27,3 +27,25 @@
     column-gap: 20px;
   }
 }
+
+.moviesCardList__button-more {
+  max-width: 320px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 5px;
+  margin: 80px auto 0;
+  padding: 10px 145px 8px;
+  background-color: inherit;
+  cursor: $cursor;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
+  @media screen and (max-width: 460px) {
+    padding: 10px 106px 8px;
+  }
+}
+.moviesCardList__button-text {
+  font-size: $buttonFontSize;
+  line-height: 15px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+}
