@@ -7,7 +7,6 @@ class MoviesApi {
     getInitialCards() { //запрашиваем все карточки с фотографиями из сервера 
         return fetch(this._url, {
             method: 'GET',
-            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             }
