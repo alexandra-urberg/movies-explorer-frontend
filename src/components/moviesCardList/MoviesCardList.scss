@@ -43,9 +43,16 @@
     padding: 10px 106px 8px;
   }
 }
+
 .moviesCardList__button-text {
   font-size: $buttonFontSize;
   line-height: 15px;
   font-weight: 500;
   color: rgba(0, 0, 0, 1);
+}
+
+.moviesCardList__error-text {
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 400;
 }
