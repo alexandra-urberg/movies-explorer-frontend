@@ -11,24 +11,9 @@ function Form(props) {
       </div>
       <div className="form__container">
         <form className="form__box">
-          <label className="form__label">
-            <h2 className="form__description">{props.title}</h2>
-            <input
-              required
-              id={props.id}
-              value={props.value}
-              name={props.name}
-              type={props.type}
-              autoComplete="on"
-              className="form__input"
-              onChange={props.onChange}
-            />
-            <span className={`${props.error ? "form__input-error" : null}`}>
-              {props.message}
-            </span>
-          </label>
           {props.children}
           <button
+            onClick={props.cleanErrors}
             type="submit"
             className={`${props.componentName} form__button form__button-text ${
               props.errors ? "form__button_disabled" : null
