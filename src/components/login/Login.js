@@ -65,24 +65,6 @@ function Login({
         </span>
       </label>
       <label className="form__label">
-        <h2 className="form__description">E-mail</h2>
-        <input
-          required
-          id="email"
-          title="E-mail"
-          value={values.email || ""}
-          type="email"
-          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-          onChange={handleChangeInput}
-          name="email"
-          autoComplete="on"
-          className="form__input"
-        />
-        <span className={`${errors.email ? "form__input-error" : null}`}>
-          {errors.email}
-        </span>
-      </label>
-      <label className="form__label">
         <h2 className="form__description">Пароль</h2>
         <input
           required
