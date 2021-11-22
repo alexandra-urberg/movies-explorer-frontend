@@ -42,7 +42,7 @@ class Auth {
 }
 
 const auth = new Auth({
-  url: "https://api.nomoredomains.diploma.nomoredomains.rocks.",
+  url: "https://api.nomoredomains.diploma.nomoredomains.rocks",
 
   headers: {
     Accept: "application/json",
