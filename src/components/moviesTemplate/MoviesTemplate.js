@@ -1,23 +1,46 @@
 import { useState } from "react";
 
-function MoviesTemplate() {
-  const [movie, setMovie] = useState("");
-  const [validationErrors, setValidationErrors] = useState({ movie: "" }); //state of input validation
+function MoviesTemplate({
+  handleSetMovies,
+  movie,
+  setMovie,
+  checkingShortCut,
+  isValid,
+}) {
+  const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
   function handleChangeMovie(e) {
     //Обработчик изменения инпута name обновляет стейт
     const { value } = e.target;
     setMovie(value);
 
-    if (value.length < 2) {
-      validationErrors.movie = "Нужно ввести ключевое слово";
+    if (value.length < 1) {
+      setValidationErrors("Нужно ввести ключевое слово");
     } else {
-      validationErrors.movie = "" && setValidationErrors(validationErrors);
+      return setValidationErrors("");
     }
   }
+
+  function onValid() {
+    isValid();
+  }
+
+  function handleFilter(e) {
+    e.preventDefault();
+    handleSetMovies();
+  }
+
+  function onFilter() {
+    checkingShortCut();
+  }
+
   return (
     <div className="moviesTemplate">
-      <form className="moviesTemplate__form">
+      <form
+        className="moviesTemplate__form"
+        onSubmit={handleFilter}
+        onClick={onValid}
+      >
         <label className="moviesTemplate__label">
           <input
             onChange={handleChangeMovie}
@@ -28,21 +51,21 @@ function MoviesTemplate() {
             placeholder="Фильмы"
             required
           />
-          <button className="moviesTemplate__button" type="submit"></button>
-          <span
-            className={`${validationErrors.movie ? "form__input-error" : null}`}
-          >
-            {validationErrors.movie}
+          <button className="moviesTemplate__button"></button>
+          <div className="moviesTemplate__div"></div>
+          <span className={`${validationErrors ? "form__input-error" : null}`}>
+            {validationErrors}
           </span>
         </label>
-      </form>
-      <div className="moviesTemplate__search">
-        <h1 className="moviesTemplate__title">Короткометражки</h1>
-        <label className="moviesTemplate__checkbox">
+        <label className="moviesTemplate__search moviesTemplate__checkbox">
+          <h1 className="moviesTemplate__title">Короткометражки</h1>
           <input className="moviesTemplate__input" type="checkbox" />
-          <span className="moviesTemplate__checkbox-switch"></span>
+          <span
+            className="moviesTemplate__checkbox-switch"
+            onClick={onFilter}
+          ></span>
         </label>
-      </div>
+      </form>
     </div>
   );
 }

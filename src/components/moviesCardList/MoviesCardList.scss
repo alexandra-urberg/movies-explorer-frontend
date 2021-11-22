@@ -14,6 +14,7 @@
   column-gap: 24px;
   margin: 0;
   padding: 0;
+  transition: 10s opacity, 7 visibility;
   @media screen and (min-width: 702px) and (max-width: 1139px) {
     grid-template-columns: repeat(auto-fit, 339px);
     row-gap: 36px;
@@ -26,6 +27,10 @@
     margin: 0 auto;
     column-gap: 20px;
   }
+}
+
+.moviesCardList__invisiable {
+  display: none;
 }
 
 .moviesCardList__button-more {
@@ -52,7 +57,7 @@
 }
 
 .moviesCardList__error-text {
-  font-size: 16px;
-  line-height: 18px;
+  font-size: $buttonFontSize;
+  line-height: 15px;
   font-weight: 400;
 }

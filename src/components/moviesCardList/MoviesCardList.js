@@ -1,23 +1,140 @@
-import React from "react";
+import { useState } from "react";
+import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
-import initialCards from "../../utils/initialCards";
 
-function MoviesCardList(btn) {
+function MoviesCardList({
+  filterMovie,
+  filterMovies,
+  movie,
+  textError,
+  isValid,
+}) {
+  const [visiableMax, setVisiableMax] = useState(12);
+  const [visiableMed, setVisiableMed] = useState(8);
+  const [visiableMin, setVisiableMin] = useState(5);
+
+  function showMoreMoviesMax() {
+    setVisiableMax((prevValue) => {
+      return prevValue + 3;
+    });
+  }
+
+  function showMoreMoviesMed() {
+    setVisiableMed((prevValue) => {
+      return prevValue + 2;
+    });
+  }
+
+  function showMoreMoviesMin() {
+    return setVisiableMin((prevValue) => {
+      return prevValue + 2;
+    });
+  }
+  //console.log(movie)
+  //console.log(filterMovie.length);
+  //console.log(filterMovies.length)
   return (
     <div className="moviesCardList">
-      <ul className="moviesCardList__container">
-        {initialCards.map((card, { btn }) => {
-          return (
-            <MoviesCard
-              nameRU={card.nameRU}
-              image={card.image}
-              duration={card.duration}
-              key={card._id}
-              btn={btn}
-            />
-          );
-        })}
-      </ul>
+      <MediaQuery minWidth={1280}>
+        <p
+          className={`${
+            isValid
+              ? "moviesCardList__error-text"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {textError || " Ничего не найденно"}
+        </p>
+        <ul
+          className={`${
+            filterMovies.length !== 0
+              ? "moviesCardList__container"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {filterMovie
+            .slice(0, visiableMax)
+            .map((movie, { btn, filterMovies }) => {
+              return (
+                <MoviesCard
+                  nameRU={movie.nameRU}
+                  nameEN={movie.nameEN}
+                  image={movie.image.url}
+                  duration={movie.duration}
+                  key={movie.id}
+                  btn={btn}
+                  trailerLink={movie.trailerLink}
+                  filterMovies={filterMovies}
+                />
+              );
+            })}
+        </ul>
+        {visiableMax < filterMovie.length && (
+          <button
+            type="submit"
+            className="moviesCardList__button-more moviesCardList__button-text"
+            onClick={showMoreMoviesMax}
+          >
+            Еще
+          </button>
+        )}
+      </MediaQuery>
+      <MediaQuery minWidth={481} maxWidth={1279}>
+        {filterMovie.length !== 0 ? (
+          <ul className="moviesCardList__container">
+            {filterMovie.slice(0, visiableMed).map((movie, { btn }) => {
+              return (
+                <MoviesCard
+                  nameRU={movie.nameRU}
+                  nameEN={movie.nameEN}
+                  image={movie.image.url}
+                  duration={movie.duration}
+                  key={movie.id}
+                  btn={btn}
+                  trailerLink={movie.trailerLink}
+                />
+              );
+            })}
+          </ul>
+        ) : null}
+        {visiableMed < filterMovie.length && (
+          <button
+            type="button"
+            className="moviesCardList__button-more moviesCardList__button-text"
+            onClick={showMoreMoviesMed}
+          >
+            Еще
+          </button>
+        )}
+      </MediaQuery>
+      <MediaQuery maxWidth={480}>
+        {filterMovie.length !== 0 ? (
+          <ul className="moviesCardList__container">
+            {filterMovie.slice(0, visiableMin).map((movie, { btn }) => {
+              return (
+                <MoviesCard
+                  nameRU={movie.nameRU}
+                  nameEN={movie.nameEN}
+                  image={movie.image.url}
+                  duration={movie.duration}
+                  key={movie.id}
+                  btn={btn}
+                  trailerLink={movie.trailerLink}
+                />
+              );
+            })}
+          </ul>
+        ) : null}
+        {visiableMin < filterMovie.length && (
+          <button
+            type="submit"
+            className="moviesCardList__button-more moviesCardList__button-text"
+            onClick={showMoreMoviesMin}
+          >
+            Еще
+          </button>
+        )}
+      </MediaQuery>
     </div>
   );
 }
