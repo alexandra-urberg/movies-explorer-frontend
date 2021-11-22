@@ -44,7 +44,7 @@ function App() {
     //вытаскиваем информацию о пользователе
     if (isAuthorized) {
       setIsLoading(true);
-      Promise.all([mainApi.getPersonalInformation(), mainApi.setSavedMovies()])
+      Promise.all([mainApi.getPersonalInformation(), mainApi.getSavedMovies()])
         .then(([userData, cardData]) => {
           // console.log([userData])
           // console.log([cardData])

@@ -20,6 +20,14 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
+  getSavedMovies() {
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      credentials: "include",
+      headers: this._headers,
+    }).then(this._handleResponse);
+  }
+
   editPersonalProfile(data) {
     // запрагиваем  измение инфомуции о user и сохранении его на сервере
     return fetch(`${this._url}/users/me`, {
