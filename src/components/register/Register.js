@@ -9,7 +9,7 @@ function Register({
   onRegistered,
   isLoading,
 }) {
-  const { values, handleChange, errors, isValid, resetForm } =
+  const { values, handleChange, errors, isValid } =
     useFormValidation();
 
   function handleChangeInput(e) {
@@ -17,10 +17,6 @@ function Register({
     if (userRegisterInput.length > 0) {
       setUserRegisterInput("");
     }
-  }
-
-  function deleteErrors() {
-    resetForm();
   }
 
   function handleSubmit(e) {
@@ -41,7 +37,6 @@ function Register({
       componentName="form__signUp"
       errors={errors.name || errors.email || errors.password}
       disabled={!isValid || null}
-      cleanErrors={deleteErrors}
       path="/sign-in"
       btn="Зарегистрироваться"
       text="Уже зарегистрированы?&nbsp;"

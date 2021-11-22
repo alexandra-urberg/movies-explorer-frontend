@@ -13,7 +13,6 @@ function Form(props) {
         <form className="form__box" onSubmit={props.onSubmit}>
           {props.children}
           <button
-            onClick={props.cleanErrors}
             type="submit"
             className={`${props.componentName} form__button form__button-text ${
               props.errors ? "form__button_disabled" : null

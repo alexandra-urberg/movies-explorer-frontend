@@ -8,7 +8,7 @@ function Login({
   onAuthorization,
   isLoading,
 }) {
-  const { values, handleChange, errors, isValid, resetForm } =
+  const { values, handleChange, errors, isValid } =
     useFormValidation();
 
   function handleChangeInput(e) {
@@ -16,10 +16,6 @@ function Login({
     if (userLoginInput.length > 0) {
       setuserLoginInput("");
     }
-  }
-
-  function deleteErrors() {
-    resetForm();
   }
 
   function handleSubmit(e) {
@@ -41,7 +37,6 @@ function Login({
       disabled={!isValid || null}
       path="/profile"
       btn="Войти"
-      cleanErrors={deleteErrors}
       text="Ещё не зарегистрированы?"
       link="/sign-up"
       linkTitle=" Регистрация"
