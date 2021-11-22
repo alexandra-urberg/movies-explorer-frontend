@@ -64,7 +64,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: "https://api.nomoredomains.diploma.nomoredomains.rocks.",
+  url: "https://api.nomoredomains.diploma.nomoredomains.rocks",
   headers: {
     "Content-Type": "application/json",
   },
