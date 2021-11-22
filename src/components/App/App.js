@@ -184,7 +184,7 @@ function App() {
       <div className="App">
         <>
           <Switch>
-          <Route exact path="/">
+            <Route exact path="/">
               <Header isAuthorized={isAuthorized} />
               <Main />
               <Footer />
@@ -216,7 +216,8 @@ function App() {
               )}
             </Route>
             <ProtectedRoute
-              exact path="/profile"
+              exact
+              path="/profile"
               component={Profile}
               onPopupOpen={handleOpenPopup}
               onSignOut={signOut}
@@ -228,7 +229,8 @@ function App() {
               onClose={closePopup}
             />
             <ProtectedRoute
-              exact path="/saved-movies"
+              exact
+              path="/saved-movies"
               component={SavedMovies}
               onPopupOpen={handleOpenPopup}
               isOpen={isPopupNavigatorOpen}
@@ -239,7 +241,8 @@ function App() {
               filterMovies={filterMovies}
             />
             <ProtectedRoute
-              exact path="/movies"
+              exact
+              path="/movies"
               component={Movies}
               onPopupOpen={handleOpenPopup}
               setMovie={setMovie}
