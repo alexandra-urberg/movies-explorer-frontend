@@ -12,7 +12,11 @@ function MoviesCard(card, filterMovies) {
       <div className="card__header">
         <div className="card__description">
           <h2 className="card__title">{card.nameRU || card.nameEN}</h2>
-          <p className="card__duration">{card.duration}</p>
+          <p className="card__duration">{`${
+            card.duration > 60
+              ? `${Math.floor(card.duration / 60)}ч ${card.duration % 60}м`
+              : `${card.duration}м`
+          }`}</p>
         </div>
         <button
           className={`

@@ -35,16 +35,14 @@ function MoviesCardList({
   //console.log(filterMovies.length)
   return (
     <div className="moviesCardList">
+      <p
+        className={`${
+          isValid ? "moviesCardList__error-text" : "moviesCardList__invisiable"
+        }`}
+      >
+        {textError || " Ничего не найденно"}
+      </p>
       <MediaQuery minWidth={1280}>
-        <p
-          className={`${
-            isValid
-              ? "moviesCardList__error-text"
-              : "moviesCardList__invisiable"
-          }`}
-        >
-          {textError || " Ничего не найденно"}
-        </p>
         <ul
           className={`${
             filterMovies.length !== 0
@@ -80,23 +78,27 @@ function MoviesCardList({
         )}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
-        {filterMovie.length !== 0 ? (
-          <ul className="moviesCardList__container">
-            {filterMovie.slice(0, visiableMed).map((movie, { btn }) => {
-              return (
-                <MoviesCard
-                  nameRU={movie.nameRU}
-                  nameEN={movie.nameEN}
-                  image={movie.image.url}
-                  duration={movie.duration}
-                  key={movie.id}
-                  btn={btn}
-                  trailerLink={movie.trailerLink}
-                />
-              );
-            })}
-          </ul>
-        ) : null}
+        <ul
+          className={`${
+            filterMovies.length !== 0
+              ? "moviesCardList__container"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {filterMovie.slice(0, visiableMed).map((movie, { btn }) => {
+            return (
+              <MoviesCard
+                nameRU={movie.nameRU}
+                nameEN={movie.nameEN}
+                image={movie.image.url}
+                duration={movie.duration}
+                key={movie.id}
+                btn={btn}
+                trailerLink={movie.trailerLink}
+              />
+            );
+          })}
+        </ul>
         {visiableMed < filterMovie.length && (
           <button
             type="button"
@@ -108,23 +110,27 @@ function MoviesCardList({
         )}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
-        {filterMovie.length !== 0 ? (
-          <ul className="moviesCardList__container">
-            {filterMovie.slice(0, visiableMin).map((movie, { btn }) => {
-              return (
-                <MoviesCard
-                  nameRU={movie.nameRU}
-                  nameEN={movie.nameEN}
-                  image={movie.image.url}
-                  duration={movie.duration}
-                  key={movie.id}
-                  btn={btn}
-                  trailerLink={movie.trailerLink}
-                />
-              );
-            })}
-          </ul>
-        ) : null}
+        <ul
+          className={`${
+            filterMovies.length !== 0
+              ? "moviesCardList__container"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {filterMovie.slice(0, visiableMin).map((movie, { btn }) => {
+            return (
+              <MoviesCard
+                nameRU={movie.nameRU}
+                nameEN={movie.nameEN}
+                image={movie.image.url}
+                duration={movie.duration}
+                key={movie.id}
+                btn={btn}
+                trailerLink={movie.trailerLink}
+              />
+            );
+          })}
+        </ul>
         {visiableMin < filterMovie.length && (
           <button
             type="submit"

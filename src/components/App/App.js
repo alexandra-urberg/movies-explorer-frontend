@@ -215,46 +215,44 @@ function App() {
                 />
               )}
             </Route>
-            <ProtectedRoute path="/profile">
-              <Header onPopupOpen={handleOpenPopup} />
-              <Profile
-                onSignOut={signOut}
-                name={name}
-                email={email}
-                userInput={userInput}
-                setUserInput={setUserInput}
-                isOpen={isPopupNavigatorOpen}
-                onClose={closePopup}
-              />
-            </ProtectedRoute>
-            <ProtectedRoute path="/saved-movies">
-              <Header onPopupOpen={handleOpenPopup} />
-              <SavedMovies
-                isOpen={isPopupNavigatorOpen}
-                onClose={closePopup}
-                checkingShortCut={checkingShortCut}
-                filterMovie={checkShortCut ? shortCut : filterMovie}
-                isLoading={isLoading}
-                filterMovies={filterMovies}
-              />
-              <Footer />
-            </ProtectedRoute>
-            <ProtectedRoute path="/movies">
-              <Header onPopupOpen={handleOpenPopup} />
-              <Movies
-                setMovie={setMovie}
-                textError={textError}
-                checkingShortCut={checkingShortCut}
-                movie={movie}
-                filterMovies={filterMovies}
-                handleSetMovies={handleSetMovies}
-                filterMovie={checkShortCut ? shortCut : filterMovie}
-                isLoading={isLoading}
-                isOpen={isPopupNavigatorOpen}
-                onClose={closePopup}
-              />
-              <Footer />
-            </ProtectedRoute>
+            <ProtectedRoute
+              path="/profile"
+              component={Profile}
+              onPopupOpen={handleOpenPopup}
+              onSignOut={signOut}
+              name={name}
+              email={email}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              isOpen={isPopupNavigatorOpen}
+              onClose={closePopup}
+            />
+            <ProtectedRoute
+              path="/saved-movies"
+              component={SavedMovies}
+              onPopupOpen={handleOpenPopup}
+              isOpen={isPopupNavigatorOpen}
+              onClose={closePopup}
+              checkingShortCut={checkingShortCut}
+              filterMovie={checkShortCut ? shortCut : filterMovie}
+              isLoading={isLoading}
+              filterMovies={filterMovies}
+            />
+            <ProtectedRoute
+              path="/movies"
+              component={Movies}
+              onPopupOpen={handleOpenPopup}
+              setMovie={setMovie}
+              textError={textError}
+              checkingShortCut={checkingShortCut}
+              movie={movie}
+              filterMovies={filterMovies}
+              handleSetMovies={handleSetMovies}
+              filterMovie={checkShortCut ? shortCut : filterMovie}
+              isLoading={isLoading}
+              isOpen={isPopupNavigatorOpen}
+              onClose={closePopup}
+            />
             <Route path="/*">
               <NotFound />
             </Route>
