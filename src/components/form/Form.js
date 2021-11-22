@@ -10,7 +10,7 @@ function Form(props) {
         <h1 className="form__title">{props.header}</h1>
       </div>
       <div className="form__container">
-        <form className="form__box">
+        <form className="form__box" onSubmit={props.onSubmit}>
           {props.children}
           <button
             onClick={props.cleanErrors}
