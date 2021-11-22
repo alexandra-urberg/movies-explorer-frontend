@@ -3,7 +3,7 @@ import { useFormValidation } from "../../utils/hooks/useFormValidation";
 import Header from "../header/Header";
 
 function Profile(props) {
-  const { values, handleChange, errors, isValid, resetForm } =
+  const { values, handleChange, errors, isValid} =
     useFormValidation();
 
   function handleChangeInput(e) {
@@ -13,8 +13,13 @@ function Profile(props) {
     }
   }
 
-  function deleteErrors() {
-    resetForm();
+  function handleSubmit(e) {
+    e.preventDefault();//Запрещаем браузеру переходить по адресу формы
+
+    props.onUpdate({//Передаём значения управляемых компонентов во внешний обработчик
+      name: values.name,
+      about: values.email,
+    });
   }
 
   return (
@@ -22,7 +27,7 @@ function Profile(props) {
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="profile">
         <h1 className="profile__title">Привет, {props.name}!</h1>
-        <form className="profile__box">
+        <form className="profile__box" onSubmit={handleSubmit}>
           <label className="profile__label">
             <h2 className="profile__description">Имя</h2>
             <input
@@ -59,7 +64,6 @@ function Profile(props) {
             </span>
           </label>
           <button
-            onClick={deleteErrors}
             type="submit"
             className={`profile__button profile__button-text ${
               errors.name || errors.email || null

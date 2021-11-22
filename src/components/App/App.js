@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import moviesApi from "../../utils/MoviesApi";
+import mainApi from "../../utils/MainApi";
 import auth from "../../utils/auth";
 import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 import Header from "../header/Header";
@@ -19,6 +20,7 @@ function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [movie, setMovie] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const [shortCut, setShortCut] = useState([]);
@@ -38,6 +40,24 @@ function App() {
   let history = useHistory();
 
   // User's part //
+  useEffect(() => {
+    //вытаскиваем информацию о пользователе
+    if (isAuthorized) {
+      setIsLoading(true);
+      Promise.all([mainApi.getPersonalInformation(), mainApi.setSavedMovies()])
+        .then(([userData, cardData]) => {
+          // console.log([userData])
+          // console.log([cardData])
+          // console.log([userData.data])
+          // console.log([cardData.data])
+          setCurrentUser(userData.data);
+          setSavedMovies(cardData.data);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    }
+  }, [isAuthorized]);
+
   const tockenCheck = useCallback(() => {
     // проверяем токен
     const jwt = localStorage.getItem("jwt");
@@ -98,6 +118,24 @@ function App() {
     localStorage.removeItem("jwt");
     history.push("/sign-in");
     window.location.reload("/sign-in"); // перезагружаем страницу после выхода, что вся информация о предыдущем user удалялась
+  };
+
+  const handleUpdateUser = (data) => {
+    // внешний обработчик отвечающий за сохранение введенной информации о пользователе на сервер
+    setIsLoading(true);
+    // console.log(data)
+    // console.log(data.name, data.about)
+    mainApi
+      .editPersonalProfile(data)
+      .then((res) => {
+        setCurrentUser({
+          ...currentUser,
+          name: res.data.name,
+          email: res.data.email,
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
   };
   // Movies part//
   useEffect(() => {
@@ -184,11 +222,6 @@ function App() {
       <div className="App">
         <>
           <Switch>
-            <Route exact path="/">
-              <Header isAuthorized={isAuthorized} />
-              <Main />
-              <Footer />
-            </Route>
             <Route exact path="/sign-up">
               {isRegistered ? (
                 <Redirect to="/sign-in" />
@@ -218,6 +251,7 @@ function App() {
             <ProtectedRoute
               exact
               path="/profile"
+              onUpdate={handleUpdateUser}
               component={Profile}
               onPopupOpen={handleOpenPopup}
               onSignOut={signOut}
@@ -231,6 +265,7 @@ function App() {
             <ProtectedRoute
               exact
               path="/saved-movies"
+              savedMovies={savedMovies}
               component={SavedMovies}
               onPopupOpen={handleOpenPopup}
               isOpen={isPopupNavigatorOpen}
@@ -256,6 +291,11 @@ function App() {
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
             />
+            <Route exact path="/">
+              <Header isAuthorized={isAuthorized} />
+              <Main />
+              <Footer />
+            </Route>
             <Route exact path="/*">
               <NotFound />
             </Route>
