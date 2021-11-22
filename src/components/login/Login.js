@@ -8,8 +8,7 @@ function Login({
   onAuthorization,
   isLoading,
 }) {
-  const { values, handleChange, errors, isValid } =
-    useFormValidation();
+  const { values, handleChange, errors, isValid } = useFormValidation();
 
   function handleChangeInput(e) {
     handleChange(e);
