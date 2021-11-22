@@ -184,6 +184,11 @@ function App() {
       <div className="App">
         <>
           <Switch>
+            <Route path="/">
+              <Header isAuthorized={isAuthorized} />
+              <Main />
+              <Footer />
+            </Route>
             <Route path="/sign-up">
               {isRegistered ? (
                 <Redirect to="/sign-in" />
@@ -250,13 +255,8 @@ function App() {
               />
               <Footer />
             </ProtectedRoute>
-            <Route path="/notFound">
+            <Route path="/*">
               <NotFound />
-            </Route>
-            <Route path="/">
-              <Header isAuthorized={isAuthorized} />
-              <Main />
-              <Footer />
             </Route>
           </Switch>
         </>

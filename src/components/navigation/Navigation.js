@@ -122,7 +122,7 @@ function Navigation(props) {
               <li className="header__link-navigation">
                 <Link
                   to="/saved-movies"
-                  className="header__link header__font-weight header__font-size"
+                  className="header__link header__font-size"
                 >
                   Сохраненные фильмы
                 </Link>
