@@ -12,9 +12,15 @@ function Form(props) {
       <div className="form__container">
         <form className="form__box" onSubmit={props.onSubmit}>
           {props.children}
+          <span className={`${props.component}`} />
+          <span
+            className={`${props.input ? "form__error form__text-error" : ""}`}
+          >
+            {props.input}
+          </span>
           <button
             type="submit"
-            className={`${props.componentName} form__button form__button-text ${
+            className={`form__button form__button-text ${
               props.errors ? "form__button_disabled" : null
             }`}
             disabled={props.disabled}

@@ -31,10 +31,11 @@ function Login({
     <Form
       onSubmit={handleSubmit}
       header="Рады видеть!"
-      componentName="form__signIn"
-      errors={errors.email || errors.password || null}
-      disabled={!isValid || null}
+      errors={errors.email || errors.password}
+      disabled={!isValid}
       path="/profile"
+      input={userLoginInput}
+      component="form__signIn"
       btn="Войти"
       text="Ещё не зарегистрированы?"
       link="/sign-up"

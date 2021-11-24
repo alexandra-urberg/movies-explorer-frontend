@@ -1,4 +1,3 @@
-import { withRouter } from "react-router";
 import Form from "../form/Form";
 import Preloader from "../preloader/Preloader";
 import { useFormValidation } from "../../utils/hooks/useFormValidation";
@@ -33,10 +32,11 @@ function Register({
     <Form
       onSubmit={handleSubmit}
       header="Добро пожаловать!"
-      componentName="form__signUp"
       errors={errors.name || errors.email || errors.password}
-      disabled={!isValid || null}
+      disabled={!isValid}
       path="/sign-in"
+      component="form__signUp"
+      input={userRegisterInput}
       btn="Зарегистрироваться"
       text="Уже зарегистрированы?&nbsp;"
       link="/sign-in"
@@ -96,9 +96,8 @@ function Register({
         </span>
       </label>
       {isLoading && <Preloader />}
-      <p>{}</p>
     </Form>
   );
 }
 
-export default withRouter(Register);
+export default Register;
