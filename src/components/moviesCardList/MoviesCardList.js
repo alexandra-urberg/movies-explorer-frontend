@@ -30,6 +30,9 @@ function MoviesCardList({
       return prevValue + 2;
     });
   }
+  console.log(filterMovie.length);
+  console.log(filterMovies.length);
+  console.log(movie.length);
 
   return (
     <div className="moviesCardList">
@@ -73,7 +76,7 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
         <ul
@@ -105,7 +108,7 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
         <ul
@@ -137,7 +140,7 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
       </MediaQuery>
     </div>
   );
