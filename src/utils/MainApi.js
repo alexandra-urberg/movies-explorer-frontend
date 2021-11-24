@@ -36,7 +36,7 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        emailt: data.email,
+        email: data.email,
       }),
     }).then(this._handleResponse);
   }
