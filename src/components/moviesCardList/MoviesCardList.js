@@ -8,6 +8,7 @@ function MoviesCardList({
   textError,
   isValid,
   movie,
+  filterShortCards,
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
@@ -33,6 +34,7 @@ function MoviesCardList({
   console.log(filterMovie.length);
   console.log(filterMovies.length);
   console.log(movie.length);
+  console.log(filterShortCards.length)
 
   return (
     <div className="moviesCardList">

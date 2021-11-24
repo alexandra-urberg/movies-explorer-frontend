@@ -10,7 +10,7 @@ function Movies(props) {
   const [valid, setValid] = useState(false);
 
   function isValid() {
-    if (props.filterMovies.length === 0 && props.movie.length !== 0) {
+    if (props.filterMovies.length === 0 && props.movie.length !== 0 && props.filterShortCards.length) {
       return setValid(true);
     } else {
       return setValid(false);
@@ -31,6 +31,7 @@ function Movies(props) {
         />
         {props.isLoading && <Preloader />}
         <MoviesCardList
+          filterShortCards={props.filterShortCards}
           movie={props.movie}
           isValid={valid}
           filterMovies={props.filterMovies}

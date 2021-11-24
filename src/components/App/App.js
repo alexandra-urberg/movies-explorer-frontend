@@ -203,15 +203,14 @@ function App() {
   function checkingShortCut() {
     checkShortCut ? setCheckShortCut(false) : setCheckShortCut(true);
   }
-
   function filtrationShort(movies) {
     return movies.filter((value) => (value.duration < 41 ? value : false));
   }
 
   const filterMovies = filtrationMovies(movies, movie);
+  const filterShortCards = filtrationShort(filterMovies)
 
   const handleSetMovies = () => {
-    const filterShortCards = filtrationShort(filterMovies);
     setIsLoading(true);
     setFilterMovie(filterMovies);
     setShortCut(filterShortCards);
@@ -285,6 +284,7 @@ function App() {
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               loggedIn={isAuthorized}
+              filterShortCards={filterShortCards}
             />
             <ProtectedRoute
               exact
