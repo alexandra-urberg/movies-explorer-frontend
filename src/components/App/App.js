@@ -1,6 +1,12 @@
 import "../../index.scss";
 import { useState, useEffect, useCallback } from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
@@ -17,57 +23,62 @@ import Profile from "../profile/Profile";
 import NotFound from "../notFound/NotFound";
 
 function App() {
+  //User's
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  //Movie's
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [movie, setMovie] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
   const [shortCut, setShortCut] = useState([]);
   const [checkShortCut, setCheckShortCut] = useState("");
   const [filterMovie, setFilterMovie] = useState([]); // исправить назване
   const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [textError, setTextError] = useState(false);
-  // const [registerError, setRegisterError] = useState("");
-  // const [loginError, setLoginError] = useState("");
-  const [userInput, setUserInput] = useState("");
-  const [userLoginInput, setUserLoginInput] = useState("");
-  const [userRegisterInput, setUserRegisterInput] = useState("");
+  //Inputs
+  const [movie, setMovie] = useState(""); // value for the movie's component input
   const [name, setName] = useState({ name: "" });
   const [email, setEmail] = useState({ email: "" });
+  //Errors
+  const [registerError, setRegisterError] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [userUpdateError, setUserUpdateError] = useState("");
+  const [movieError, setMovieError] = useState("");
+  // const [addMovieError, setAddMovieError] = useState("");
+  // const [deleteMovieError, setDeleteMovieError] = useState("");
 
   let history = useHistory();
-
-  // User's part //
+  let location = useLocation();
+  //User's part
   useEffect(() => {
-    //вытаскиваем информацию о пользователе
+    //information about user and user's movies
     if (isAuthorized) {
       setIsLoading(true);
       Promise.all([mainApi.getPersonalInformation(), mainApi.getSavedMovies()])
         .then(([userData, cardData]) => {
-          // console.log([userData])
-          // console.log([cardData])
-          // console.log([userData.data])
-          // console.log([cardData.data])
           setCurrentUser(userData.data);
           setSavedMovies(cardData.data);
         })
-        .catch((error) => console.log(error))
-        .finally(() => setIsLoading(false));
+        .catch((error) => {
+          if (error === 500 || "Failed to fetch")
+            return setRegisterError("На сервере произошла ошибка");
+          console.log(error);
+        })
+        .finally(() => {
+          setTimeout(() => setIsLoading(false), 700);
+        });
     }
   }, [isAuthorized]);
 
   const tockenCheck = useCallback(() => {
-    // проверяем токен
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       auth
         .checkToken(jwt)
         .then((res) => {
           if (res) {
-            setEmail({ email: res.data.email });
             setName({ name: res.data.name });
+            setEmail({ email: res.data.email });
             setIsAuthorized(true);
           }
         })
@@ -83,7 +94,6 @@ function App() {
   }, [tockenCheck]);
 
   const handleRegistration = (data) => {
-    // внешний обработчик отвечающий за регистрацию
     setIsLoading(true);
     auth
       .registration(data)
@@ -93,13 +103,20 @@ function App() {
       })
       .catch((error) => {
         setIsAuthorized(false);
+        if (error === 500 || "Failed to fetch")
+          return setRegisterError("На сервере произошла ошибка");
+        if (error === 409)
+          return setRegisterError("Пользователь с таким email уже существует.");
+        if (error === 400)
+          return setLoginError("Все поля должны быть заполнены");
         console.log(error);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 700);
+      });
   };
 
   const handleAuthorization = (data) => {
-    // внешний обработчик отвечающий за авторизацию
     setIsLoading(true);
     auth
       .authorize(data)
@@ -109,22 +126,32 @@ function App() {
         localStorage.setItem("jwt", res.token);
         history.push("/movies");
       })
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+      .catch((error) => {
+        setIsAuthorized(false);
+        if (error === 500 || "Failed to fetch")
+          return setLoginError("На сервере произошла ошибка");
+        if (error === 400)
+          return setLoginError("Все поля должны быть заполнены");
+        if (error === 401)
+          return setLoginError("Вы ввели неправильный логин или пароль.");
+        console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 700);
+      });
   };
 
   const signOut = () => {
-    // внешний обработчик отвечающий за выход
     localStorage.removeItem("jwt");
+    setIsAuthorized(false);
+    setMovies([]);
+    setSavedMovies([]);
     history.push("/sign-in");
-    window.location.reload("/sign-in"); // перезагружаем страницу после выхода, что вся информация о предыдущем user удалялась
+    window.location.reload("/sign-in"); //reload the page
   };
 
   const handleUpdateUser = (data) => {
-    // внешний обработчик отвечающий за сохранение введенной информации о пользователе на сервер
     setIsLoading(true);
-    // console.log(data)
-    // console.log(data.name, data.about)
     mainApi
       .editPersonalProfile(data)
       .then((res) => {
@@ -133,11 +160,22 @@ function App() {
           name: res.data.name,
           email: res.data.email,
         });
+        history.push(location.pathname);
       })
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+      .catch((error) => {
+        if (error === 500 || "Failed to fetch")
+          return setUserUpdateError("На сервере произошла ошибка");
+        if (error === 409)
+          return setUserUpdateError(
+            "Пользователь с таким email уже существует."
+          );
+        console.log(error);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 700);
+      });
   };
-  // Movies part//
+  //Movie's part
   useEffect(() => {
     setTimeout(() => {
       moviesApi
@@ -146,14 +184,14 @@ function App() {
           setMovies(moviesData);
         })
         .catch((error) => {
-          if (error.message === 500) {
-            setTextError(
+          if (error.message === 500 || "Failed to fetch") {
+            setMovieError(
               "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
             );
           }
           return console.log(error.message);
         });
-    }, 800);
+    }, 900);
   }, []);
 
   function filtrationMovies(movies) {
@@ -179,7 +217,15 @@ function App() {
     setShortCut(filterShortCards);
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 900);
+  };
+  //Open/close navigation when page's size max-width 840px
+  const handleOpenPopup = (card) => {
+    setIsPopupNavigatorOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupNavigatorOpen(false);
   };
 
   useEffect(() => {
@@ -209,45 +255,37 @@ function App() {
     };
   }, []);
 
-  const handleOpenPopup = (card) => {
-    setIsPopupNavigatorOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupNavigatorOpen(false);
-  };
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <>
           <Switch>
-            <Route exact path="/sign-up">
-              {isRegistered ? (
-                <Redirect to="/sign-in" />
-              ) : (
-                <Register
-                  isLoading={isLoading}
-                  isRegistered={isRegistered}
-                  onRegistered={handleRegistration}
-                  userRegisterInput={userRegisterInput}
-                  setUserRegisterInput={setUserRegisterInput}
-                />
-              )}
+            <Route exact path="/">
+              <Header
+                isAuthorized={isAuthorized}
+                onPopupOpen={handleOpenPopup}
+              />
+              <Main onClose={closePopup} isOpen={isPopupNavigatorOpen} />
+              <Footer />
             </Route>
-            <Route exact path="/sign-in">
-              {isAuthorized ? (
-                <Redirect to="/movies" />
-              ) : (
-                <Login
-                  isLoading={isLoading}
-                  isAuthorized={isAuthorized}
-                  onAuthorization={handleAuthorization}
-                  userLoginInput={userLoginInput}
-                  setUserLoginInput={setUserLoginInput}
-                />
-              )}
-            </Route>
+            <ProtectedRoute
+              exact
+              path="/movies"
+              component={Movies}
+              onPopupOpen={handleOpenPopup}
+              setMovie={setMovie}
+              textError={movieError}
+              setTextError={setMovieError}
+              checkingShortCut={checkingShortCut}
+              movie={movie}
+              filterMovies={filterMovies}
+              handleSetMovies={handleSetMovies}
+              filterMovie={checkShortCut ? shortCut : filterMovie}
+              isLoading={isLoading}
+              isOpen={isPopupNavigatorOpen}
+              onClose={closePopup}
+              loggedIn={isAuthorized}
+            />
             <ProtectedRoute
               exact
               path="/profile"
@@ -257,10 +295,13 @@ function App() {
               onSignOut={signOut}
               name={name}
               email={email}
-              userInput={userInput}
-              setUserInput={setUserInput}
+              userInput={userUpdateError}
+              setUserInput={setUserUpdateError}
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
+              loggedIn={isAuthorized}
+              currentUser={currentUser}
+              isLoading={isLoading}
             />
             <ProtectedRoute
               exact
@@ -274,27 +315,34 @@ function App() {
               filterMovie={checkShortCut ? shortCut : filterMovie}
               isLoading={isLoading}
               filterMovies={filterMovies}
+              loggedIn={isAuthorized}
             />
-            <ProtectedRoute
-              exact
-              path="/movies"
-              component={Movies}
-              onPopupOpen={handleOpenPopup}
-              setMovie={setMovie}
-              textError={textError}
-              checkingShortCut={checkingShortCut}
-              movie={movie}
-              filterMovies={filterMovies}
-              handleSetMovies={handleSetMovies}
-              filterMovie={checkShortCut ? shortCut : filterMovie}
-              isLoading={isLoading}
-              isOpen={isPopupNavigatorOpen}
-              onClose={closePopup}
-            />
-            <Route exact path="/">
-              <Header isAuthorized={isAuthorized} />
-              <Main />
-              <Footer />
+            <Route exact path="/sign-up">
+              {isRegistered ? (
+                <Redirect to="/sign-in" />
+              ) : (
+                <Register
+                  registerError="registerError"
+                  isLoading={isLoading}
+                  isRegistered={isRegistered}
+                  onRegistered={handleRegistration}
+                  userRegisterInput={registerError}
+                  setUserRegisterInput={setRegisterError}
+                />
+              )}
+            </Route>
+            <Route exact path="/sign-in">
+              {isAuthorized ? (
+                <Redirect to="/movies" />
+              ) : (
+                <Login
+                  isLoading={isLoading}
+                  isAuthorized={isAuthorized}
+                  onAuthorization={handleAuthorization}
+                  userLoginInput={loginError}
+                  setUserLoginInput={setLoginError}
+                />
+              )}
             </Route>
             <Route exact path="/*">
               <NotFound />
