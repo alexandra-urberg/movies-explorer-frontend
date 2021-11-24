@@ -1,9 +1,13 @@
+import { useContext, useEffect } from "react";
 import PopupNavigator from "../popupNavigator/PopupNavigator";
 import { useFormValidation } from "../../utils/hooks/useFormValidation";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from "../header/Header";
+import Preloader from "../preloader/Preloader";
 
 function Profile(props) {
-  const { values, handleChange, errors, isValid} =
+  const currentUser = useContext(CurrentUserContext);
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
     useFormValidation();
 
   function handleChangeInput(e) {
@@ -14,27 +18,37 @@ function Profile(props) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();//Запрещаем браузеру переходить по адресу формы
+    e.preventDefault(); //Запрещаем браузеру переходить по адресу формы
 
-    props.onUpdate({//Передаём значения управляемых компонентов во внешний обработчик
+    props.onUpdate({
+      //Передаём значения управляемых компонентов во внешний обработчик
       name: values.name,
-      about: values.email,
+      email: values.email,
     });
+    resetForm();
   }
+
+  useEffect(() => {
+    // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
+    setValues(currentUser.name);
+    setValues(currentUser.email);
+  }, [currentUser, setValues]);
 
   return (
     <>
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="profile">
-        <h1 className="profile__title">Привет, {props.name}!</h1>
+        <h1 className="profile__title">Привет, {props.currentUser.name}!</h1>
         <form className="profile__box" onSubmit={handleSubmit}>
           <label className="profile__label">
             <h2 className="profile__description">Имя</h2>
             <input
-              placeholder={props.name}
+              placeholder={props.currentUser.name}
               required
               id="name"
               value={values.name}
+              minLength="3"
+              maxLength="30"
               name="name"
               type="text"
               autoComplete="on"
@@ -48,7 +62,7 @@ function Profile(props) {
           <label className="profile__label">
             <h2 className="profile__description">E-mail</h2>
             <input
-              placeholder={props.email}
+              placeholder={props.currentUser.email}
               required
               pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
               value={values.email}
@@ -63,6 +77,10 @@ function Profile(props) {
               {errors.email}
             </span>
           </label>
+          {props.isLoading && <Preloader />}
+          <span className="profile__input-error profile__margin">
+            {props.userInput}
+          </span>
           <button
             type="submit"
             className={`profile__button profile__button-text ${
