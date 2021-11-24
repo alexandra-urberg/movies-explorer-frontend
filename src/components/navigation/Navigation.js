@@ -150,7 +150,7 @@ function Navigation(props) {
               </MediaQuery>
             </>
           ) : (
-            <MediaQuery maxWidth={1280}>
+            <>
               <li className="header__link-navigation">
                 <Link to="/sign-up" className="header__link">
                   Регистрация
@@ -161,7 +161,7 @@ function Navigation(props) {
                   Войти
                 </Link>
               </li>
-            </MediaQuery>
+            </>
           )}
         </Route>
       </Switch>

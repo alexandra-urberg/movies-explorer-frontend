@@ -5,8 +5,9 @@ import AboutProject from "../aboutProject/AboutProject";
 import Techs from "../techs/Techs";
 import AboutMe from "../aboutMe/AboutMe";
 import Portfolio from "../portfolio/Portfolio";
+import PopupNavigator from "../popupNavigator/PopupNavigator";
 
-function Main() {
+function Main(props) {
   return (
     <main className="main">
       <Promo></Promo>
@@ -14,6 +15,7 @@ function Main() {
       <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
+      <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
     </main>
   );
 }
