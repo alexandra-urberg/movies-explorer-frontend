@@ -2,14 +2,7 @@ import { useState } from "react";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
-function MoviesCardList({
-  filterMovie,
-  filterMovies,
-  textError,
-  isValid,
-  movie,
-  filterShortCards,
-}) {
+function MoviesCardList({ filterMovie, textError, movie }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
@@ -32,27 +25,19 @@ function MoviesCardList({
     });
   }
   console.log(filterMovie.length);
-  console.log(filterMovies.length);
-  console.log(movie.length);
-  console.log(filterShortCards.length)
-
   return (
     <div className="moviesCardList">
       <span
         className={`${
-          isValid ? "moviesCardList__error-text" : "moviesCardList__invisiable"
+          !filterMovie.length
+            ? "moviesCardList__error-text"
+            : "moviesCardList__invisiable"
         }`}
       >
         {textError || " Ничего не найденно"}
       </span>
       <MediaQuery minWidth={1280}>
-        <ul
-          className={`${
-            filterMovies.length !== 0
-              ? "moviesCardList__container"
-              : "moviesCardList__invisiable"
-          }`}
-        >
+        <ul className="moviesCardList__container">
           {filterMovie
             .slice(0, visiableMax)
             .map((movie, { btn, filterMovies }) => {
@@ -78,16 +63,10 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : null}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
-        <ul
-          className={`${
-            filterMovie.length !== 0
-              ? "moviesCardList__container"
-              : "moviesCardList__invisiable"
-          }`}
-        >
+        <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMed).map((movie, { btn }) => {
             return (
               <MoviesCard
@@ -110,16 +89,10 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : null}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
-        <ul
-          className={`${
-            filterMovies.length !== 0
-              ? "moviesCardList__container"
-              : "moviesCardList__invisiable"
-          }`}
-        >
+        <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMin).map((movie, { btn }) => {
             return (
               <MoviesCard
@@ -142,7 +115,7 @@ function MoviesCardList({
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : filterMovies.length === 0 ? null : null}
+        ) : movie.length === 0 ? null : null}
       </MediaQuery>
     </div>
   );

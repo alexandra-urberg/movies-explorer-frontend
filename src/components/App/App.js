@@ -207,10 +207,9 @@ function App() {
     return movies.filter((value) => (value.duration < 41 ? value : false));
   }
 
-  const filterMovies = filtrationMovies(movies, movie);
-  const filterShortCards = filtrationShort(filterMovies)
-
   const handleSetMovies = () => {
+    const filterMovies = filtrationMovies(movies);
+    const filterShortCards = filtrationShort(filterMovies);
     setIsLoading(true);
     setFilterMovie(filterMovies);
     setShortCut(filterShortCards);
@@ -277,14 +276,12 @@ function App() {
               setTextError={setMovieError}
               checkingShortCut={checkingShortCut}
               movie={movie}
-              filterMovies={filterMovies}
               handleSetMovies={handleSetMovies}
               filterMovie={checkShortCut ? shortCut : filterMovie}
               isLoading={isLoading}
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               loggedIn={isAuthorized}
-              filterShortCards={filterShortCards}
             />
             <ProtectedRoute
               exact
@@ -302,6 +299,7 @@ function App() {
               loggedIn={isAuthorized}
               currentUser={currentUser}
               isLoading={isLoading}
+              checkingShortCut={checkingShortCut}
             />
             <ProtectedRoute
               exact
@@ -312,9 +310,7 @@ function App() {
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               checkingShortCut={checkingShortCut}
-              filterMovie={checkShortCut ? shortCut : filterMovie}
               isLoading={isLoading}
-              filterMovies={filterMovies}
               loggedIn={isAuthorized}
             />
             <Route exact path="/sign-up">

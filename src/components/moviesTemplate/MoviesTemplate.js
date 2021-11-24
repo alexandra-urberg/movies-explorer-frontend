@@ -2,10 +2,9 @@ import { useState } from "react";
 
 function MoviesTemplate({
   handleSetMovies,
+  checkingShortCut,
   movie,
   setMovie,
-  checkingShortCut,
-  isValid,
 }) {
   const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
@@ -19,10 +18,6 @@ function MoviesTemplate({
     } else {
       return setValidationErrors("");
     }
-  }
-
-  function onValid() {
-    isValid();
   }
 
   function handleFilter(e) {
@@ -39,7 +34,6 @@ function MoviesTemplate({
       <form
         className="moviesTemplate__form"
         onSubmit={handleFilter}
-        onClick={onValid}
       >
         <label className="moviesTemplate__label">
           <input
