@@ -1,6 +1,9 @@
 .techs {
   background-color: #f5f5f5;
   padding: 100px 70px;
+  @media screen and (min-width: 1285px) {
+    background-color: inherit;
+  }
   @media screen and (min-width: 461px) and (max-width: 800px) {
     padding: 90px 50px;
   }

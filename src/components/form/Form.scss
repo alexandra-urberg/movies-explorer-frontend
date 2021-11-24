@@ -178,3 +178,16 @@
   opacity: $buttonOpaity;
   text-decoration: $listStyle;
 }
+
+.form__error {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto 20px;
+}
+
+.form__text-error {
+  font-size: 0.687em;
+  line-height: 13px;
+  font-weight: 400;
+  color: #ff004c;
+}
