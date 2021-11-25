@@ -35,6 +35,7 @@ function App() {
   const [checkShortCut, setCheckShortCut] = useState("");
   const [filterMovie, setFilterMovie] = useState([]); // исправить назване
   const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
+  const [firtsSearch, setFirtsSearch] = useState(true);
   //Inputs
   const [movie, setMovie] = useState(""); // value for the movie's component input
   const [name, setName] = useState({ name: "" });
@@ -213,6 +214,7 @@ function App() {
     setIsLoading(true);
     setFilterMovie(filterMovies);
     setShortCut(filterShortCards);
+    setFirtsSearch(false);
     setTimeout(() => {
       setIsLoading(false);
     }, 900);
@@ -282,6 +284,7 @@ function App() {
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               loggedIn={isAuthorized}
+              firtsSearch={firtsSearch}
             />
             <ProtectedRoute
               exact

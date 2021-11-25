@@ -2,7 +2,7 @@ import { useState } from "react";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
-function MoviesCardList({ filterMovie, textError, movie }) {
+function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
@@ -24,12 +24,12 @@ function MoviesCardList({ filterMovie, textError, movie }) {
       return prevValue + 2;
     });
   }
-  console.log(filterMovie.length);
+  console.log(filterMovie);
   return (
     <div className="moviesCardList">
       <span
         className={`${
-          !filterMovie.length
+          !filterMovie.length && !firtsSearch
             ? "moviesCardList__error-text"
             : "moviesCardList__invisiable"
         }`}
@@ -55,7 +55,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
               );
             })}
         </ul>
-        {visiableMax < filterMovie.length ? (
+        {visiableMax < filterMovie.length &&
           <button
             type="submit"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -63,7 +63,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        }
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
         <ul className="moviesCardList__container">
@@ -81,7 +81,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
             );
           })}
         </ul>
-        {visiableMed < filterMovie.length ? (
+        {visiableMed < filterMovie.length &&
           <button
             type="button"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -89,7 +89,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        }
       </MediaQuery>
       <MediaQuery maxWidth={480}>
         <ul className="moviesCardList__container">
@@ -107,7 +107,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
             );
           })}
         </ul>
-        {visiableMin < filterMovie.length ? (
+        {visiableMin < filterMovie.length &&
           <button
             type="submit"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -115,7 +115,7 @@ function MoviesCardList({ filterMovie, textError, movie }) {
           >
             Еще
           </button>
-        ) : movie.length === 0 ? null : null}
+        }
       </MediaQuery>
     </div>
   );

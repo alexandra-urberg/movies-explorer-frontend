@@ -3,8 +3,10 @@ import { useLocation } from "react-router";
 
 function MoviesCard(card, filterMovies) {
   const location = useLocation();
+  console.log(card);
+  console.log(card.id);
   return (
-    <li
+    <li key={card.id}
       className={`card ${
         filterMovies.length === 0 ? "moviesCardList__invisiable" : ""
       }`}
