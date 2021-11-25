@@ -1,11 +1,17 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({movie, onClicked}) {
+function MoviesCard({movie, onClicked, handleAddMovie}) {
   const location = useLocation();
   console.log(movie);
   console.log(movie.id);
+
+  function onAddMovie(e) {
+    e.preventDefault();
+    handleAddMovie(movie);
+  }
   
+  console.log(typeof(onAddMovie));
   return (
     <li key={movie.id}
       className="card">
@@ -18,7 +24,7 @@ function MoviesCard({movie, onClicked}) {
               : `${movie.duration}м`
           }`}</p>
         </div>
-        <button
+        <button onClick={onAddMovie}
           className={`
                     ${
                       location.pathname !== "/movies" && onClicked ? "card__btton-add"

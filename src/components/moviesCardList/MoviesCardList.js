@@ -2,7 +2,14 @@ import { useState } from "react";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
-function MoviesCardList({ filterMovie, textError, firtsSearch, onClicked }) {
+function MoviesCardList({
+  filterMovie,
+  textError,
+  firtsSearch,
+  onClicked,
+  addMovieError,
+  handleAddMovie,
+}) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
@@ -34,13 +41,18 @@ function MoviesCardList({ filterMovie, textError, firtsSearch, onClicked }) {
             : "moviesCardList__invisiable"
         }`}
       >
-        {textError || "Ничего не найденно"}
+        {textError || addMovieError || "Ничего не найденно"}
       </span>
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMax).map((movie) => {
             return (
-              <MoviesCard movie={movie} key={movie.id} onClicked={onClicked} />
+              <MoviesCard
+                movie={movie}
+                key={movie.id}
+                onClicked={onClicked}
+                handleAddMovie={handleAddMovie}
+              />
             );
           })}
         </ul>
@@ -58,7 +70,12 @@ function MoviesCardList({ filterMovie, textError, firtsSearch, onClicked }) {
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMed).map((movie) => {
             return (
-              <MoviesCard movie={movie} key={movie.id} onClicked={onClicked} />
+              <MoviesCard
+                movie={movie}
+                key={movie.id}
+                onClicked={onClicked}
+                handleAddMovie={handleAddMovie}
+              />
             );
           })}
         </ul>
@@ -76,7 +93,12 @@ function MoviesCardList({ filterMovie, textError, firtsSearch, onClicked }) {
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMin).map((movie) => {
             return (
-              <MoviesCard movie={movie} key={movie.id} onClicked={onClicked} />
+              <MoviesCard
+                movie={movie}
+                key={movie.id}
+                onClicked={onClicked}
+                handleAddMovie={handleAddMovie}
+              />
             );
           })}
         </ul>

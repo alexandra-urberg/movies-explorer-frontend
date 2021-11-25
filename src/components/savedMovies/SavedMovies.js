@@ -11,7 +11,7 @@ function SavedMovies(props) {
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="savedMovies">
         <MoviesTemplate />
-        <MoviesCardList className="card__button-delete" />
+        <MoviesCardList  filterMovie={props.savedMovies}/>
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>
       <Footer />

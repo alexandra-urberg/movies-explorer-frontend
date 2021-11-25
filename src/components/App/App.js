@@ -36,7 +36,7 @@ function App() {
   const [filterMovie, setFilterMovie] = useState([]); // исправить назване
   const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
   const [firtsSearch, setFirtsSearch] = useState(true);
-  //const [onClicked, setOnClicked] = useState(false);
+  const [onClicked, setOnClicked] = useState(false);
   //Inputs
   const [movie, setMovie] = useState(""); // value for the movie's component input
   const [name, setName] = useState({ name: "" });
@@ -46,7 +46,7 @@ function App() {
   const [loginError, setLoginError] = useState("");
   const [userUpdateError, setUserUpdateError] = useState("");
   const [movieError, setMovieError] = useState("");
-  // const [addMovieError, setAddMovieError] = useState("");
+  const [addMovieError, setAddMovieError] = useState("");
   // const [deleteMovieError, setDeleteMovieError] = useState("");
 
   let history = useHistory();
@@ -147,7 +147,14 @@ function App() {
     localStorage.removeItem("jwt");
     setIsAuthorized(false);
     setMovies([]);
+    setFilterMovie([]);
     setSavedMovies([]);
+    setShortCut([]);
+    setFilterMovie("");
+    setMovieError("");
+    setUserUpdateError("");
+    setLoginError("");
+    setRegisterError("");
     history.push("/sign-in");
     window.location.reload("/sign-in"); //reload the page
   };
@@ -220,6 +227,31 @@ function App() {
       setIsLoading(false);
     }, 900);
   };
+
+  const handleAddMovie = (movie) => {
+    setIsLoading(true);
+    mainApi
+      .addNewCard(movie)
+      .then((moviesData) => {
+          console.log([moviesData.data])
+          console.log([moviesData])
+          debugger;
+          const usersMovie = [moviesData.data, ...savedMovies];
+          setSavedMovies(usersMovie);
+          setOnClicked(true);
+      })
+      .catch((error) => {
+        if(error === 500 || "Failed to fetch") {
+          return setAddMovieError("На сервере произошла ошибка");
+        } else {
+          return console.log(error.message);
+        }
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 700);
+      });
+  };
+
   //Open/close navigation when page's size max-width 840px
   const handleOpenPopup = (card) => {
     setIsPopupNavigatorOpen(true);
@@ -286,7 +318,9 @@ function App() {
               onClose={closePopup}
               loggedIn={isAuthorized}
               firtsSearch={firtsSearch}
-              //onClicked={onClicked}
+              addMovieError={addMovieError}
+              handleAddMovie={handleAddMovie}
+              onClicked={onClicked}
             />
             <ProtectedRoute
               exact

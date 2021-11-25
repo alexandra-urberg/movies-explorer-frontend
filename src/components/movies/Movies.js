@@ -23,7 +23,8 @@ function Movies(props) {
           textError={props.textError}
           filterMovie={props.filterMovie}
           firtsSearch={props.firtsSearch}
-          btn="card__button"
+          addMovieError={props.addMovieError}
+          handleAddMovie={props.handleAddMovie}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>
