@@ -36,6 +36,7 @@ function App() {
   const [filterMovie, setFilterMovie] = useState([]); // исправить назване
   const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
   const [firtsSearch, setFirtsSearch] = useState(true);
+  //const [onClicked, setOnClicked] = useState(false);
   //Inputs
   const [movie, setMovie] = useState(""); // value for the movie's component input
   const [name, setName] = useState({ name: "" });
@@ -285,6 +286,7 @@ function App() {
               onClose={closePopup}
               loggedIn={isAuthorized}
               firtsSearch={firtsSearch}
+              //onClicked={onClicked}
             />
             <ProtectedRoute
               exact

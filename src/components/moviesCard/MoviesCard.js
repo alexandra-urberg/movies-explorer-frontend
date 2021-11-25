@@ -1,13 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({movie}) {
+function MoviesCard({movie, onClicked}) {
   const location = useLocation();
   console.log(movie);
-  console.log(movie.key);
+  console.log(movie.id);
   
   return (
-    <li key={movie.key}
+    <li key={movie.id}
       className="card">
       <div className="card__header">
         <div className="card__description">
@@ -21,15 +21,15 @@ function MoviesCard({movie}) {
         <button
           className={`
                     ${
-                      location.pathname !== "/movies"
-                        ? "card__button-delete"
+                      location.pathname !== "/movies" && onClicked ? "card__btton-add"
+                        : location.pathname !== "/movies" ? "card__button-delete"
                         : "card__button"
                     }`}
         />
       </div>
       <a href={movie.trailerLink} className="card-link" target="blank">
         <img
-          src={`https://api.nomoreparties.co${movie.image}`}
+          src={`https://api.nomoreparties.co${movie.image.url}`}
           alt={movie.nameRU || movie.nameEN}
           className="card__image"
         />

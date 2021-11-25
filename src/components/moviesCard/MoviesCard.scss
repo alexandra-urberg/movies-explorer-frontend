@@ -78,6 +78,25 @@
   }
 }
 
+.card__btton-add {
+  align-self: center;
+  background-color: $buttomHover;
+  color: #f9f9f9;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 13px;
+  border: $listStyle;
+  cursor: $cursor;
+  border-radius: 36px;
+  height: 30px;
+  width: 30px;
+  margin: 19px 14px 19px 0;
+  &:hover {
+    background-image: url(../../images/delete__icon.svg);
+    opacity: 0.8;
+  }
+}
+
 .card__button-delete {
   align-self: center;
   background-image: url(../../images/delete__icon.svg);

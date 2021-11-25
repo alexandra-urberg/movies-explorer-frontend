@@ -18,6 +18,7 @@ function Movies(props) {
         />
         {props.isLoading && <Preloader />}
         <MoviesCardList
+          onClicked={props.onClicked}
           movie={props.movie}
           textError={props.textError}
           filterMovie={props.filterMovie}
