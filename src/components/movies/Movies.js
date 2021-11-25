@@ -25,6 +25,7 @@ function Movies(props) {
           firtsSearch={props.firtsSearch}
           addMovieError={props.addMovieError}
           handleAddMovie={props.handleAddMovie}
+          setOnClicked={props.setOnClicked}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

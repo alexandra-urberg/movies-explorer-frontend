@@ -9,6 +9,7 @@ function MoviesCardList({
   onClicked,
   addMovieError,
   handleAddMovie,
+  setOnClicked
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
@@ -49,9 +50,11 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
+                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
+                setOnClicked={setOnClicked}
               />
             );
           })}
@@ -72,9 +75,11 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
+                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
+                setOnClicked={setOnClicked}
               />
             );
           })}
@@ -95,9 +100,11 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
+                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
+                setOnClicked={setOnClicked}
               />
             );
           })}

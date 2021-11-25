@@ -236,9 +236,7 @@ function App() {
           console.log([moviesData.data])
           console.log([moviesData])
           debugger;
-          const usersMovie = [moviesData.data, ...savedMovies];
-          setSavedMovies(usersMovie);
-          setOnClicked(true);
+          setSavedMovies([moviesData.data, ...savedMovies]);
       })
       .catch((error) => {
         if(error === 500 || "Failed to fetch") {
@@ -321,6 +319,7 @@ function App() {
               addMovieError={addMovieError}
               handleAddMovie={handleAddMovie}
               onClicked={onClicked}
+              setOnClicked={setOnClicked}
             />
             <ProtectedRoute
               exact

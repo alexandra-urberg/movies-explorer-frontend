@@ -1,19 +1,19 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({movie, onClicked, handleAddMovie}) {
+function MoviesCard({movie, onClicked, handleAddMovie, setOnClicked }) {
   const location = useLocation();
-  console.log(movie);
-  console.log(movie.id);
+  console.log(movie.movieId);
 
   function onAddMovie(e) {
     e.preventDefault();
     handleAddMovie(movie);
+    setOnClicked(true);
   }
   
   console.log(typeof(onAddMovie));
   return (
-    <li key={movie.id}
+    <li key={movie.movieId}
       className="card">
       <div className="card__header">
         <div className="card__description">
