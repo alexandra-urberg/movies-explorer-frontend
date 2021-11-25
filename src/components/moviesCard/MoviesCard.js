@@ -1,23 +1,21 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard(card, filterMovies) {
+function MoviesCard({movie}) {
   const location = useLocation();
-  console.log(card);
-  console.log(card.id);
+  console.log(movie);
+  console.log(movie.key);
+  
   return (
-    <li key={card.id}
-      className={`card ${
-        filterMovies.length === 0 ? "moviesCardList__invisiable" : ""
-      }`}
-    >
+    <li key={movie.key}
+      className="card">
       <div className="card__header">
         <div className="card__description">
-          <h2 className="card__title">{card.nameRU || card.nameEN}</h2>
+          <h2 className="card__title">{movie.nameRU || movie.nameEN}</h2>
           <p className="card__duration">{`${
-            card.duration > 60
-              ? `${Math.floor(card.duration / 60)}ч ${card.duration % 60}м`
-              : `${card.duration}м`
+            movie.duration > 60
+              ? `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`
+              : `${movie.duration}м`
           }`}</p>
         </div>
         <button
@@ -29,10 +27,10 @@ function MoviesCard(card, filterMovies) {
                     }`}
         />
       </div>
-      <a href={card.trailerLink} className="card-link" target="blank">
+      <a href={movie.trailerLink} className="card-link" target="blank">
         <img
-          src={`https://api.nomoreparties.co${card.image}`}
-          alt={card.nameRU || card.nameEN}
+          src={`https://api.nomoreparties.co${movie.image}`}
+          alt={movie.nameRU || movie.nameEN}
           className="card__image"
         />
       </a>

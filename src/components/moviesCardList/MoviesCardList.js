@@ -2,7 +2,7 @@ import { useState } from "react";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
-function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
+function MoviesCardList({ filterMovie, textError, firtsSearch }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
@@ -24,7 +24,7 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
       return prevValue + 2;
     });
   }
-  console.log(filterMovie);
+  console.log(filterMovie.id);
   return (
     <div className="moviesCardList">
       <span
@@ -34,28 +34,25 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
             : "moviesCardList__invisiable"
         }`}
       >
-        {textError || " Ничего не найденно"}
+        {textError || "Ничего не найденно"}
       </span>
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
-          {filterMovie
-            .slice(0, visiableMax)
-            .map((movie, { btn, filterMovies }) => {
-              return (
-                <MoviesCard
-                  nameRU={movie.nameRU}
-                  nameEN={movie.nameEN}
-                  image={movie.image.url}
-                  duration={movie.duration}
-                  key={movie.id}
-                  btn={btn}
-                  trailerLink={movie.trailerLink}
-                  filterMovies={filterMovies}
-                />
-              );
-            })}
+          {filterMovie.slice(0, visiableMax).map((movie, { filterMovies }) => {
+            return (
+              <MoviesCard
+                nameRU={movie.nameRU}
+                nameEN={movie.nameEN}
+                image={movie.image.url}
+                duration={movie.duration}
+                key={movie.id}
+                trailerLink={movie.trailerLink}
+                filterMovies={filterMovies}
+              />
+            );
+          })}
         </ul>
-        {visiableMax < filterMovie.length &&
+        {visiableMax < filterMovie.length && (
           <button
             type="submit"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -63,25 +60,21 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
           >
             Еще
           </button>
-        }
+        )}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
         <ul className="moviesCardList__container">
-          {filterMovie.slice(0, visiableMed).map((movie, { btn }) => {
+          {filterMovie.slice(0, visiableMed).map((movie) => {
             return (
               <MoviesCard
-                nameRU={movie.nameRU}
-                nameEN={movie.nameEN}
-                image={movie.image.url}
-                duration={movie.duration}
+                movie={movie}
                 key={movie.id}
-                btn={btn}
-                trailerLink={movie.trailerLink}
+                filterMovie={filterMovie}
               />
             );
           })}
         </ul>
-        {visiableMed < filterMovie.length &&
+        {visiableMed < filterMovie.length && (
           <button
             type="button"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -89,11 +82,11 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
           >
             Еще
           </button>
-        }
+        )}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
         <ul className="moviesCardList__container">
-          {filterMovie.slice(0, visiableMin).map((movie, { btn }) => {
+          {filterMovie.slice(0, visiableMin).map((movie, { filterMovies }) => {
             return (
               <MoviesCard
                 nameRU={movie.nameRU}
@@ -101,13 +94,13 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
                 image={movie.image.url}
                 duration={movie.duration}
                 key={movie.id}
-                btn={btn}
                 trailerLink={movie.trailerLink}
+                filterMovies={filterMovies}
               />
             );
           })}
         </ul>
-        {visiableMin < filterMovie.length &&
+        {visiableMin < filterMovie.length && (
           <button
             type="submit"
             className="moviesCardList__button-more moviesCardList__button-text"
@@ -115,7 +108,7 @@ function MoviesCardList({ filterMovie, textError, movie, firtsSearch }) {
           >
             Еще
           </button>
-        }
+        )}
       </MediaQuery>
     </div>
   );

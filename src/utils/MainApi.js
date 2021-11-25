@@ -41,15 +41,24 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  addNewCard(data) {
+  addNewCard(movie) {
     // запрашиваем добавить новую карточку на сервер
     return fetch(`${this._url}/movies`, {
       method: "POST",
       credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        link: data.link,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: movie.image,
+        trailer: movie.trailer,
+        thumbnail: movie.thumbnail,
+        movieId: movie.movieId,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
       }),
     }).then(this._handleResponse);
   }

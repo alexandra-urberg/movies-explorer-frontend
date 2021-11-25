@@ -288,6 +288,18 @@ function App() {
             />
             <ProtectedRoute
               exact
+              path="/saved-movies"
+              savedMovies={savedMovies}
+              component={SavedMovies}
+              onPopupOpen={handleOpenPopup}
+              isOpen={isPopupNavigatorOpen}
+              onClose={closePopup}
+              checkingShortCut={checkingShortCut}
+              isLoading={isLoading}
+              loggedIn={isAuthorized}
+            />
+            <ProtectedRoute
+              exact
               path="/profile"
               onUpdate={handleUpdateUser}
               component={Profile}
@@ -303,18 +315,6 @@ function App() {
               currentUser={currentUser}
               isLoading={isLoading}
               checkingShortCut={checkingShortCut}
-            />
-            <ProtectedRoute
-              exact
-              path="/saved-movies"
-              savedMovies={savedMovies}
-              component={SavedMovies}
-              onPopupOpen={handleOpenPopup}
-              isOpen={isPopupNavigatorOpen}
-              onClose={closePopup}
-              checkingShortCut={checkingShortCut}
-              isLoading={isLoading}
-              loggedIn={isAuthorized}
             />
             <Route exact path="/sign-up">
               {isRegistered ? (
