@@ -26,6 +26,7 @@ function Movies(props) {
           addMovieError={props.addMovieError}
           handleAddMovie={props.handleAddMovie}
           setOnClicked={props.setOnClicked}
+          //deleteMovieError={props.deleteMovieError}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

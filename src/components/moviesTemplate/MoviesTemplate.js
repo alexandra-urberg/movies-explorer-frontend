@@ -28,7 +28,7 @@ function MoviesTemplate({
   function onFilter() {
     checkingShortCut();
   }
-
+  
   return (
     <div className="moviesTemplate">
       <form

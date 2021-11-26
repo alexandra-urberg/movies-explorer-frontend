@@ -47,7 +47,7 @@ function App() {
   const [userUpdateError, setUserUpdateError] = useState("");
   const [movieError, setMovieError] = useState("");
   const [addMovieError, setAddMovieError] = useState("");
-  // const [deleteMovieError, setDeleteMovieError] = useState("");
+  const [deleteMovieError, setDeleteMovieError] = useState("");
 
   let history = useHistory();
   let location = useLocation();
@@ -249,6 +249,26 @@ function App() {
       });
   };
 
+  const handleDeleteMovie = (movie) =>{
+    setIsLoading(true);
+    mainApi
+      .deleteCard(movie._id)
+      .then(() => {
+        setSavedMovies((movie) => movie.filter((m) => m._id !== movie._id));
+      })
+      .catch((error) => {
+        if(error === 500 || "Failed to fetch") {
+          return setDeleteMovieError("На сервере произошла ошибка");
+        } else {
+          return ((error) => {
+            console.log(error.message);
+          })
+        }
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 700);
+      });
+  };
   //Open/close navigation when page's size max-width 840px
   const handleOpenPopup = (card) => {
     setIsPopupNavigatorOpen(true);
@@ -319,6 +339,8 @@ function App() {
               handleAddMovie={handleAddMovie}
               onClicked={onClicked}
               setOnClicked={setOnClicked}
+              handleDeleteMovie={handleDeleteMovie}
+              deleteMovieError={deleteMovieError}
             />
             <ProtectedRoute
               exact
@@ -331,6 +353,8 @@ function App() {
               checkingShortCut={checkingShortCut}
               isLoading={isLoading}
               loggedIn={isAuthorized}
+              handleDeleteMovie={handleDeleteMovie}
+              deleteMovieError={deleteMovieError}
             />
             <ProtectedRoute
               exact

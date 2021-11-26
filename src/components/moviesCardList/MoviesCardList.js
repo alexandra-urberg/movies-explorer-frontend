@@ -10,7 +10,9 @@ function MoviesCardList({
   onClicked,
   addMovieError,
   handleAddMovie,
-  setOnClicked
+  setOnClicked,
+  deleteMovieError,
+  handleDeleteMovie
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
@@ -45,7 +47,7 @@ function MoviesCardList({
             : "moviesCardList__invisiable"
         }`}
       >
-        {textError || addMovieError || "Ничего не найденно"}
+        {textError || addMovieError || "Ничего не найденно" || deleteMovieError}
       </span>
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
@@ -57,6 +59,7 @@ function MoviesCardList({
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
                 setOnClicked={setOnClicked}
+                handleDeleteMovie={handleDeleteMovie}
               />
             );
           })}
@@ -81,6 +84,7 @@ function MoviesCardList({
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
                 setOnClicked={setOnClicked}
+                handleDeleteMovie={handleDeleteMovie}
               />
             );
           })}
@@ -105,6 +109,7 @@ function MoviesCardList({
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
                 setOnClicked={setOnClicked}
+                handleDeleteMovie={handleDeleteMovie}
               />
             );
           })}
