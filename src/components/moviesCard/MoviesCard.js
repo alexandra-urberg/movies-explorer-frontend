@@ -1,20 +1,35 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({movie, onClicked, handleAddMovie, setOnClicked }) {
+function MoviesCard({ movie, onClicked, handleAddMovie, setOnClicked }) {
   const location = useLocation();
-  console.log(movie.movieId);
+
+  const movieData = {
+    movieId: movie.id || movie._id,
+    country: movie.country || "Нет информации",
+    director: movie.director || "Нет информации",
+    year: movie.year || "Нет информации",
+    description: movie.description || "Нет информации",
+    nameRU: movie.nameRU || "Нет информации",
+    nameEN: movie.nameEN || "Нет информации",
+    duration: movie.duration || 0,
+    image:
+      `https://api.nomoreparties.co${movie.image.url}` ||
+      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2258&q=80",
+    trailer: movie.trailer || "https://www.youtube.com",
+    thumbnail:
+      movie.thumbnail ||
+      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2258&q=80",
+  };
 
   function onAddMovie(e) {
     e.preventDefault();
-    handleAddMovie(movie);
+    handleAddMovie(movieData);
     setOnClicked(true);
   }
-  
-  console.log(typeof(onAddMovie));
+
   return (
-    <li key={movie.movieId}
-      className="card">
+    <li key={movie.movieId} className="card">
       <div className="card__header">
         <div className="card__description">
           <h2 className="card__title">{movie.nameRU || movie.nameEN}</h2>
@@ -24,18 +39,31 @@ function MoviesCard({movie, onClicked, handleAddMovie, setOnClicked }) {
               : `${movie.duration}м`
           }`}</p>
         </div>
-        <button onClick={onAddMovie}
+        <button
+          onClick={onAddMovie}
           className={`
                     ${
-                      location.pathname !== "/movies" && onClicked ? "card__btton-add"
-                        : location.pathname !== "/movies" ? "card__button-delete"
-                        : "card__button"
+                      location.pathname === "/movies" && onClicked
+                        ? "card__btton-add"
+                        : location.pathname === "/movies"
+                        ? "card__button"
+                        : "card__button-delete"
                     }`}
         />
       </div>
-      <a href={movie.trailerLink} className="card-link" target="blank">
+      <a
+        href={`${
+          location.pathname === "/movies" ? movie.trailerLink : movie.trailer
+        }`}
+        className="card-link"
+        target="blank"
+      >
         <img
-          src={`https://api.nomoreparties.co${movie.image.url}`}
+          src={
+            location.pathname === "/movies"
+              ? `https://api.nomoreparties.co${movie.image.url}`
+              : movie.image
+          }
           alt={movie.nameRU || movie.nameEN}
           className="card__image"
         />

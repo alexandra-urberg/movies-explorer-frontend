@@ -59,7 +59,7 @@ function App() {
       Promise.all([mainApi.getPersonalInformation(), mainApi.getSavedMovies()])
         .then(([userData, cardData]) => {
           setCurrentUser(userData.data);
-          setSavedMovies(cardData.data);
+          setSavedMovies(cardData);
         })
         .catch((error) => {
           if (error === 500 || "Failed to fetch")
@@ -228,21 +228,20 @@ function App() {
     }, 900);
   };
 
-  const handleAddMovie = (movie) => {
+  const  handleAddMovie = (data) =>{
     setIsLoading(true);
     mainApi
-      .addNewCard(movie)
+      .addNewCard(data)
       .then((moviesData) => {
-          console.log([moviesData.data])
-          console.log([moviesData])
-          debugger;
-          setSavedMovies([moviesData.data, ...savedMovies]);
+          setSavedMovies([moviesData, ...savedMovies]);
       })
       .catch((error) => {
         if(error === 500 || "Failed to fetch") {
           return setAddMovieError("На сервере произошла ошибка");
         } else {
-          return console.log(error.message);
+          return ((error) => {
+            console.log(error.message);
+          })
         }
       })
       .finally(() => {

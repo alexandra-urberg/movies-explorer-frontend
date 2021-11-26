@@ -6,24 +6,6 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
 function Movies(props) {
-
-  const beatFilmMovies = props.filterMovie.map((movie) => {
-    return {
-      movieId: String(movie.id),
-      country: movie.country ? movie.country : "Нет информации",
-      director: movie.director ? movie.director : "Нет информации",
-      year: movie.year ? movie.year : "Нет информации",
-      description: movie.description
-        ? movie.description
-        : "Нет информации",
-      nameRU: movie.nameRU ? movie.nameRU : "Нет информации",
-      nameEN: movie.nameEN ? movie.nameEN : "Нет информации",
-      duration: movie.duration ? movie.duration : "Нет информации",
-      image: movie.image,
-      trailer: movie.trailerLink,
-      thumbnail: movie.image,
-    };
-  });
   return (
     <>
       <Header onPopupOpen={props.onPopupOpen} />
@@ -39,7 +21,7 @@ function Movies(props) {
           onClicked={props.onClicked}
           movie={props.movie}
           textError={props.textError}
-          filterMovie={beatFilmMovies}
+          filterMovie={props.filterMovie}
           firtsSearch={props.firtsSearch}
           addMovieError={props.addMovieError}
           handleAddMovie={props.handleAddMovie}

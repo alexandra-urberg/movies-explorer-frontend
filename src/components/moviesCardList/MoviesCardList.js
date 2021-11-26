@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
@@ -14,6 +15,7 @@ function MoviesCardList({
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
+  let location = useLocation();
 
   function showMoreMoviesMax() {
     setVisiableMax((prevValue) => {
@@ -37,8 +39,9 @@ function MoviesCardList({
     <div className="moviesCardList">
       <span
         className={`${
-          !filterMovie.length && !firtsSearch
+          location.pathname === "/movies" && !filterMovie && !firtsSearch
             ? "moviesCardList__error-text"
+            : location.pathname === "/movies" ? "moviesCardList__invisiable"
             : "moviesCardList__invisiable"
         }`}
       >
@@ -50,7 +53,6 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
-                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
@@ -75,7 +77,6 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
-                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
@@ -100,7 +101,6 @@ function MoviesCardList({
             return (
               <MoviesCard
                 movie={movie}
-                movieId={movie.id}
                 key={movie.id}
                 onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
