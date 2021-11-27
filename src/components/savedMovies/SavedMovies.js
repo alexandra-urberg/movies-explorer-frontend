@@ -25,8 +25,10 @@ function SavedMovies(props) {
         )}
         <MoviesCardList
           filterMovie={props.savedFilterMovies}
-          handleDeleteMovie={props.handleDeleteMovie}
           location={props.location}
+          handleDeleteMovie={props.handleDeleteMovie}
+          handleDelete={props.handleDelete}
+          removeCard={props.removedCard}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

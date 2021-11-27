@@ -8,6 +8,8 @@ function MoviesCardList({
   handleAddMovie,
   handleDeleteMovie,
   location,
+  handleDelete,
+  removeCard
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
@@ -97,6 +99,8 @@ function MoviesCardList({
                 key={movie.id}
                 handleAddMovie={handleAddMovie}
                 handleDeleteMovie={handleDeleteMovie}
+                handleDelete={handleDelete}
+                removeCard={removeCard}
               />
             );
           })}

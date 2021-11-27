@@ -33,6 +33,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [shortCut, setShortCut] = useState([]);
   const [filterMovie, setFilterMovie] = useState([]);
+  const [removedCard, setRemovedCard] = useState({});
   const [firtsSearch, setFirtsSearch] = useState(true);
   const [checkShortCut, setCheckShortCut] = useState("");
   //Inputs
@@ -252,17 +253,14 @@ function App() {
   };
 
   const handleDeleteMovie = (movie) => {
-    const usersMovies = savedMovies.find((m) => m.movieId === movie.movieId);
     setIsLoading(true);
     console.log(movie);
     console.log(movie._id);
     console.log(movie.id);
     mainApi
-      .deleteCard(usersMovies._id)
+      .deleteCard(movie._id)
       .then(() => {
-        setSavedMovies((usersMovie) =>
-          usersMovie((mov) => mov._id !== movie._id)
-        );
+        setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
       })
       .catch((error) => {
         if (error === 500 || "Failed to fetch") {
@@ -277,6 +275,10 @@ function App() {
         setTimeout(() => setIsLoading(false), 700);
       });
   };
+
+  const handleDelete = (movie) => {
+    setRemovedCard(movie);
+  }
 
   useEffect(() => {
     setAddError("");
@@ -373,6 +375,8 @@ function App() {
               isLoading={isLoading}
               loggedIn={isAuthorized}
               handleDeleteMovie={handleDeleteMovie}
+              handleDelete={handleDelete}
+              removeCard={removedCard}
               textError={addError}
               checkingShortCut={checkingShortCut}
               movie={movie}

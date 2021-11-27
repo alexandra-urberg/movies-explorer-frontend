@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({ movie, handleAddMovie, handleDeleteMovie }) {
+function MoviesCard({ movie, handleAddMovie, handleDeleteMovie, handleDelete, removeCard }) {
   const location = useLocation();
 
   const movieData = {
@@ -27,6 +27,15 @@ function MoviesCard({ movie, handleAddMovie, handleDeleteMovie }) {
     handleAddMovie(movieData);
   }
 
+  function onDeleteMovie(e) {
+    e.preventDefault();
+    handleDeleteMovie(removeCard);
+  }
+
+  const handleRemoveCard = () => {//обработчик передающий информауию от card в Main для открытия popup delete card, а также передает всю нужную информацию в App для удаления карточки 
+    handleDelete(movie);
+}
+
   return (
     <li key={movie.movieId} className="card">
       <div className="card__header">
@@ -39,7 +48,8 @@ function MoviesCard({ movie, handleAddMovie, handleDeleteMovie }) {
           }`}</p>
         </div>
         <button
-          onClick={onAddMovie}
+        onSubmit={onDeleteMovie}
+          onClick={location.pathname === "/movies" ? onAddMovie : handleRemoveCard}
           className={`
                     ${
                       location.pathname === "/movies"
