@@ -34,17 +34,24 @@ function MoviesCardList({
   console.log(location.pathname);
   return (
     <div className="moviesCardList">
+      {location.pathname === "/movies" &&
       <span
-        className={`${(location.pathname = "/movies"
-          ? !firtsSearch && !filterMovie.length
-            ? "moviesCardList__error-text"
-            : "moviesCardList__invisiable"
-          : !filterMovie.length || textError.length > 0
+        className={`${!firtsSearch && !filterMovie.length && textError.length > 0
           ? "moviesCardList__error-text"
-          : "moviesCardList__invisiable")}`}
+          : "moviesCardList__invisiable"}`}
       >
         {textError || "Ничего не найденно"}
       </span>
+    }
+    {location.pathname === "/saved-movies" &&
+      <span
+        className={`${!filterMovie.length && textError.length > 0
+          ? "moviesCardList__error-text"
+          : "moviesCardList__invisiable"}`}
+      >
+        {textError || "Ничего не найденно"}
+      </span>
+    }
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMax).map((movie) => {
