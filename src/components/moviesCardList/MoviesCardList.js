@@ -31,33 +31,20 @@ function MoviesCardList({
       return prevValue + 2;
     });
   }
-  console.log(filterMovie.length);
+  console.log(location.pathname);
   return (
     <div className="moviesCardList">
-      {location.pathname === "/movies" && (
-        <span
-          className={`${
-            !firtsSearch && !filterMovie
-              ? "moviesCardList__error-text"
-              : textError.length > 0
-              ? "moviesCardList__error-text"
-              : "moviesCardList__invisiable"
-          }`}
-        >
-          {textError || "Ничего не найденно"}
-        </span>
-      )}
-      {location.pathname === "/saced-movies" && (
-        <span
-          className={`${
-            !filterMovie || textError.length > 0
-              ? "moviesCardList__error-text"
-              : "moviesCardList__invisiable"
-          }`}
-        >
-          {textError || "Ничего не найденно"}
-        </span>
-      )}
+      <span
+        className={`${(location.pathname = "/movies"
+          ? !firtsSearch && !filterMovie.length
+            ? "moviesCardList__error-text"
+            : "moviesCardList__invisiable"
+          : !filterMovie.length || textError.length > 0
+          ? "moviesCardList__error-text"
+          : "moviesCardList__invisiable")}`}
+      >
+        {textError || "Ничего не найденно"}
+      </span>
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMax).map((movie) => {

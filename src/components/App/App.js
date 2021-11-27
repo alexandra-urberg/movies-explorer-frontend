@@ -46,7 +46,6 @@ function App() {
   const [addError, setAddError] = useState("");
   const [userUpdateError, setUserUpdateError] = useState("");
   const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
-  
 
   let history = useHistory();
   const location = useLocation();
@@ -356,7 +355,9 @@ function App() {
               path="/saved-movies"
               savedFilterMovies={
                 usersMoviesInput && checkShortCut
-                  ? filtrationMovies(filtrationShort(savedMovies, usersMoviesInput))
+                  ? filtrationMovies(
+                      filtrationShort(savedMovies, usersMoviesInput)
+                    )
                   : usersMoviesInput
                   ? filtrationMovies(savedMovies, usersMoviesInput)
                   : checkShortCut
