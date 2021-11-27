@@ -4,6 +4,7 @@ import MoviesCardList from "../moviesCardList/MoviesCardList";
 import PopupNavigator from "../popupNavigator/PopupNavigator";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import Preloader from "../preloader/Preloader";
 
 function SavedMovies(props) {
   return (
@@ -17,8 +18,12 @@ function SavedMovies(props) {
           setMovie={props.setMovie}
           location={props.location}
         />
+        {props.isLoading ? (
+          <Preloader />
+        ) : (
+          <span className="moviesCardList__error-text">{props.textError}</span>
+        )}
         <MoviesCardList
-          textError={props.textError}
           filterMovie={props.savedFilterMovies}
           handleDeleteMovie={props.handleDeleteMovie}
           location={props.location}

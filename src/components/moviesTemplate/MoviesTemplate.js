@@ -50,7 +50,7 @@ function MoviesTemplate({
             value={movie || ""}
             name="movie"
             className="moviesTemplate__input moviesTemplate__input-size moviesTemplate__image"
-            placeholder="Фильмы"
+            placeholder="Введите название фильма"
             required
           />
           <button className="moviesTemplate__button"></button>

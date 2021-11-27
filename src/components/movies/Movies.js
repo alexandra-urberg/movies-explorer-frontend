@@ -17,9 +17,12 @@ function Movies(props) {
           setMovie={props.setMovie}
           location={props.location}
         />
-        {props.isLoading && <Preloader />}
+        {props.isLoading ? (
+          <Preloader />
+        ) : (
+          <span className="moviesCardList__error-text">{props.textError}</span>
+        )}
         <MoviesCardList
-          textError={props.textError}
           filterMovie={props.filterMovie}
           firtsSearch={props.firtsSearch}
           handleAddMovie={props.handleAddMovie}
