@@ -11,22 +11,19 @@ function Movies(props) {
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="movies">
         <MoviesTemplate
-          movie={props.movie}
-          setMovie={props.setMovie}
           handleSetMovies={props.handleSetMovies}
           checkingShortCut={props.checkingShortCut}
+          movie={props.movie}
+          setMovie={props.setMovie}
+          location={props.location}
         />
         {props.isLoading && <Preloader />}
         <MoviesCardList
-          onClicked={props.onClicked}
-          movie={props.movie}
           textError={props.textError}
           filterMovie={props.filterMovie}
           firtsSearch={props.firtsSearch}
-          addMovieError={props.addMovieError}
           handleAddMovie={props.handleAddMovie}
-          setOnClicked={props.setOnClicked}
-          //deleteMovieError={props.deleteMovieError}
+          location={props.location}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

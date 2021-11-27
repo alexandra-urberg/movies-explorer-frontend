@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 
-function MoviesCard({ movie, onClicked, handleAddMovie, setOnClicked, handleDeleteMovie }) {
+function MoviesCard({ movie, handleAddMovie, handleDeleteMovie }) {
   const location = useLocation();
 
   const movieData = {
@@ -25,13 +25,6 @@ function MoviesCard({ movie, onClicked, handleAddMovie, setOnClicked, handleDele
   function onAddMovie(e) {
     e.preventDefault();
     handleAddMovie(movieData);
-    setOnClicked(true);
-  }
-
-  function onDeleteMovie(e) {
-    e.preventDefault();
-    handleDeleteMovie(movie._id);
-    setOnClicked(false);
   }
 
   return (
@@ -46,10 +39,10 @@ function MoviesCard({ movie, onClicked, handleAddMovie, setOnClicked, handleDele
           }`}</p>
         </div>
         <button
-          onClick={`${location.pathname === "/movies" ? onAddMovie : onDeleteMovie}`}
+          onClick={onAddMovie}
           className={`
                     ${
-                      location.pathname === "/movies" && onClicked
+                      location.pathname === "/movies"
                         ? "card__btton-add"
                         : location.pathname === "/movies"
                         ? "card__button"

@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function MoviesTemplate({
   handleSetMovies,
   checkingShortCut,
+  filterUsersMovies,
   movie,
   setMovie,
+  location,
 }) {
   const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
   function handleChangeMovie(e) {
-    //Обработчик изменения инпута name обновляет стейт
     const { value } = e.target;
     setMovie(value);
 
@@ -20,26 +21,33 @@ function MoviesTemplate({
     }
   }
 
-  function handleFilter(e) {
+  function handleMoviesFilter(e) {
     e.preventDefault();
-    handleSetMovies();
+    if (location.pathname === "/movies") {
+      handleSetMovies();
+      return;
+    } else if (location.pathname === "/saved-movies") {
+      filterUsersMovies();
+      return;
+    }
   }
 
   function onFilter() {
     checkingShortCut();
   }
-  
+
+  useEffect(() => {
+    setMovie("");
+  }, [setMovie, location]);
+
   return (
     <div className="moviesTemplate">
-      <form
-        className="moviesTemplate__form"
-        onSubmit={handleFilter}
-      >
+      <form className="moviesTemplate__form" onSubmit={handleMoviesFilter}>
         <label className="moviesTemplate__label">
           <input
             onChange={handleChangeMovie}
             type="text"
-            value={movie}
+            value={movie || ""}
             name="movie"
             className="moviesTemplate__input moviesTemplate__input-size moviesTemplate__image"
             placeholder="Фильмы"

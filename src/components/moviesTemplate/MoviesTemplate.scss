@@ -74,6 +74,7 @@
   width: 34px;
   &:hover {
     opacity: $buttonOpaity;
+    cursor: $cursor;
   }
   @media screen and (min-width: 1066px) and (max-width: 1170px) {
     left: 77%;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
 import MediaQuery from "react-responsive";
 import MoviesCard from "../moviesCard/MoviesCard";
 
@@ -7,17 +6,13 @@ function MoviesCardList({
   filterMovie,
   textError,
   firtsSearch,
-  onClicked,
-  addMovieError,
   handleAddMovie,
-  setOnClicked,
-  deleteMovieError,
-  handleDeleteMovie
+  handleDeleteMovie,
+  location,
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
   const [visiableMin, setVisiableMin] = useState(5);
-  let location = useLocation();
 
   function showMoreMoviesMax() {
     setVisiableMax((prevValue) => {
@@ -36,19 +31,33 @@ function MoviesCardList({
       return prevValue + 2;
     });
   }
-
+  console.log(filterMovie.length);
   return (
     <div className="moviesCardList">
-      <span
-        className={`${
-          location.pathname === "/movies" && !filterMovie && !firtsSearch
-            ? "moviesCardList__error-text"
-            : location.pathname === "/movies" ? "moviesCardList__invisiable"
-            : "moviesCardList__invisiable"
-        }`}
-      >
-        {textError || addMovieError || "Ничего не найденно" || deleteMovieError}
-      </span>
+      {location.pathname === "/movies" && (
+        <span
+          className={`${
+            !firtsSearch && !filterMovie
+              ? "moviesCardList__error-text"
+              : textError.length > 0
+              ? "moviesCardList__error-text"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {textError || "Ничего не найденно"}
+        </span>
+      )}
+      {location.pathname === "/saced-movies" && (
+        <span
+          className={`${
+            !filterMovie || textError.length > 0
+              ? "moviesCardList__error-text"
+              : "moviesCardList__invisiable"
+          }`}
+        >
+          {textError || "Ничего не найденно"}
+        </span>
+      )}
       <MediaQuery minWidth={1280}>
         <ul className="moviesCardList__container">
           {filterMovie.slice(0, visiableMax).map((movie) => {
@@ -56,9 +65,7 @@ function MoviesCardList({
               <MoviesCard
                 movie={movie}
                 key={movie.id}
-                onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
-                setOnClicked={setOnClicked}
                 handleDeleteMovie={handleDeleteMovie}
               />
             );
@@ -81,9 +88,7 @@ function MoviesCardList({
               <MoviesCard
                 movie={movie}
                 key={movie.id}
-                onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
-                setOnClicked={setOnClicked}
                 handleDeleteMovie={handleDeleteMovie}
               />
             );
@@ -106,9 +111,7 @@ function MoviesCardList({
               <MoviesCard
                 movie={movie}
                 key={movie.id}
-                onClicked={onClicked}
                 handleAddMovie={handleAddMovie}
-                setOnClicked={setOnClicked}
                 handleDeleteMovie={handleDeleteMovie}
               />
             );

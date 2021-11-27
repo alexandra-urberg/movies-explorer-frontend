@@ -32,25 +32,23 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [shortCut, setShortCut] = useState([]);
-  const [checkShortCut, setCheckShortCut] = useState("");
-  const [filterMovie, setFilterMovie] = useState([]); // исправить назване
-  const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
+  const [filterMovie, setFilterMovie] = useState([]);
   const [firtsSearch, setFirtsSearch] = useState(true);
-  const [onClicked, setOnClicked] = useState(false);
+  const [checkShortCut, setCheckShortCut] = useState("");
   //Inputs
-  const [movie, setMovie] = useState(""); // value for the movie's component input
-  const [name, setName] = useState({ name: "" });
-  const [email, setEmail] = useState({ email: "" });
+  const [movie, setMovie] = useState("");
+  const [name, setName] = useState({ name: "" }); // value for the currentUser name at Profile component
+  const [email, setEmail] = useState({ email: "" }); // value for the currentUser email at Profile component
   //Errors
   const [registerError, setRegisterError] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [addError, setAddError] = useState("");
   const [userUpdateError, setUserUpdateError] = useState("");
-  const [movieError, setMovieError] = useState("");
-  const [addMovieError, setAddMovieError] = useState("");
-  const [deleteMovieError, setDeleteMovieError] = useState("");
+  const [isPopupNavigatorOpen, setIsPopupNavigatorOpen] = useState(false);
+  
 
   let history = useHistory();
-  let location = useLocation();
+  const location = useLocation();
   //User's part
   useEffect(() => {
     //information about user and user's movies
@@ -143,22 +141,6 @@ function App() {
       });
   };
 
-  const signOut = () => {
-    localStorage.removeItem("jwt");
-    setIsAuthorized(false);
-    setMovies([]);
-    setFilterMovie([]);
-    setSavedMovies([]);
-    setShortCut([]);
-    setFilterMovie("");
-    setMovieError("");
-    setUserUpdateError("");
-    setLoginError("");
-    setRegisterError("");
-    history.push("/sign-in");
-    window.location.reload("/sign-in"); //reload the page
-  };
-
   const handleUpdateUser = (data) => {
     setIsLoading(true);
     mainApi
@@ -184,6 +166,21 @@ function App() {
         setTimeout(() => setIsLoading(false), 700);
       });
   };
+
+  const signOut = () => {
+    localStorage.removeItem("jwt");
+    setIsAuthorized(false);
+    setMovies([]);
+    setFilterMovie([]);
+    setSavedMovies([]);
+    setShortCut([]);
+    setFilterMovie("");
+    setAddError("");
+    setLoginError("");
+    setRegisterError("");
+    history.push("/sign-in");
+    window.location.reload("/sign-in"); //reload the page
+  };
   //Movie's part
   useEffect(() => {
     setTimeout(() => {
@@ -194,7 +191,7 @@ function App() {
         })
         .catch((error) => {
           if (error.message === 500 || "Failed to fetch") {
-            setMovieError(
+            setAddError(
               "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
             );
           }
@@ -216,7 +213,7 @@ function App() {
     return movies.filter((value) => (value.duration < 41 ? value : false));
   }
 
-  const handleSetMovies = () => {
+  function handleSetMovies() {
     const filterMovies = filtrationMovies(movies);
     const filterShortCards = filtrationShort(filterMovies);
     setIsLoading(true);
@@ -226,22 +223,22 @@ function App() {
     setTimeout(() => {
       setIsLoading(false);
     }, 900);
-  };
+  }
 
-  const  handleAddMovie = (data) =>{
+  const handleAddMovie = (data) => {
     setIsLoading(true);
     mainApi
       .addNewCard(data)
       .then((moviesData) => {
-          setSavedMovies([moviesData, ...savedMovies]);
+        setSavedMovies([moviesData, ...savedMovies]);
       })
       .catch((error) => {
-        if(error === 500 || "Failed to fetch") {
-          return setAddMovieError("На сервере произошла ошибка");
+        if (error === 500 || "Failed to fetch") {
+          return setAddError("На сервере произошла ошибка");
         } else {
-          return ((error) => {
+          return (error) => {
             console.log(error.message);
-          })
+          };
         }
       })
       .finally(() => {
@@ -249,26 +246,37 @@ function App() {
       });
   };
 
-  const handleDeleteMovie = (movie) =>{
+  const handleDeleteMovie = (movie) => {
+    const usersMovies = savedMovies.find((m) => m.movieId === movie.movieId);
     setIsLoading(true);
+    console.log(movie);
+    console.log(movie._id);
+    console.log(movie.id);
     mainApi
-      .deleteCard(movie._id)
+      .deleteCard(usersMovies._id)
       .then(() => {
-        setSavedMovies((movie) => movie.filter((m) => m._id !== movie._id));
+        setSavedMovies((usersMovie) =>
+          usersMovie((mov) => mov._id !== movie._id)
+        );
       })
       .catch((error) => {
-        if(error === 500 || "Failed to fetch") {
-          return setDeleteMovieError("На сервере произошла ошибка");
+        if (error === 500 || "Failed to fetch") {
+          return setAddError("На сервере произошла ошибка");
         } else {
-          return ((error) => {
+          return (error) => {
             console.log(error.message);
-          })
+          };
         }
       })
       .finally(() => {
         setTimeout(() => setIsLoading(false), 700);
       });
   };
+
+  useEffect(() => {
+    setAddError("");
+  }, [movies, location]);
+
   //Open/close navigation when page's size max-width 840px
   const handleOpenPopup = (card) => {
     setIsPopupNavigatorOpen(true);
@@ -322,12 +330,11 @@ function App() {
               exact
               path="/movies"
               component={Movies}
-              onPopupOpen={handleOpenPopup}
-              setMovie={setMovie}
-              textError={movieError}
-              setTextError={setMovieError}
-              checkingShortCut={checkingShortCut}
               movie={movie}
+              setMovie={setMovie}
+              onPopupOpen={handleOpenPopup}
+              textError={addError}
+              checkingShortCut={checkingShortCut}
               handleSetMovies={handleSetMovies}
               filterMovie={checkShortCut ? shortCut : filterMovie}
               isLoading={isLoading}
@@ -335,26 +342,34 @@ function App() {
               onClose={closePopup}
               loggedIn={isAuthorized}
               firtsSearch={firtsSearch}
-              addMovieError={addMovieError}
               handleAddMovie={handleAddMovie}
-              onClicked={onClicked}
-              setOnClicked={setOnClicked}
-              handleDeleteMovie={handleDeleteMovie}
-              deleteMovieError={deleteMovieError}
+              location={location}
             />
             <ProtectedRoute
               exact
               path="/saved-movies"
-              savedMovies={savedMovies}
+              savedFilterMovies={
+                checkShortCut
+                  ? filtrationMovies(filtrationShort(savedMovies, movie))
+                  : movie
+                  ? filtrationMovies(savedMovies, movie)
+                  : checkShortCut
+                  ? filtrationShort(savedMovies)
+                  : savedMovies
+              }
               component={SavedMovies}
+              checkShortCut={checkShortCut}
               onPopupOpen={handleOpenPopup}
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
-              checkingShortCut={checkingShortCut}
               isLoading={isLoading}
               loggedIn={isAuthorized}
               handleDeleteMovie={handleDeleteMovie}
-              deleteMovieError={deleteMovieError}
+              textError={addError}
+              checkingShortCut={checkingShortCut}
+              movie={movie}
+              setMovie={setMovie}
+              location={location}
             />
             <ProtectedRoute
               exact
@@ -365,8 +380,7 @@ function App() {
               onSignOut={signOut}
               name={name}
               email={email}
-              userInput={userUpdateError}
-              setUserInput={setUserUpdateError}
+              textError={userUpdateError}
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               loggedIn={isAuthorized}

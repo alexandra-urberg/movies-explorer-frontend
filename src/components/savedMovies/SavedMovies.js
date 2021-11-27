@@ -6,13 +6,23 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 
 function SavedMovies(props) {
-  console.log(props.savedMovies)
   return (
     <>
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="savedMovies">
-        <MoviesTemplate />
-        <MoviesCardList  deleteMovieError={props.deleteMovieError} filterMovie={props.savedMovies}/>
+        <MoviesTemplate
+          checkingShortCut={props.checkingShortCut}
+          filterUsersMovies={props.filterUsersMovies}
+          movie={props.movie}
+          setMovie={props.setMovie}
+          location={props.location}
+        />
+        <MoviesCardList
+          textError={props.textError}
+          filterMovie={props.savedFilterMovies}
+          handleDeleteMovie={props.handleDeleteMovie}
+          location={props.location}
+        />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>
       <Footer />
