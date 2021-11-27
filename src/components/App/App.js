@@ -39,6 +39,7 @@ function App() {
   const [movie, setMovie] = useState("");
   const [name, setName] = useState({ name: "" }); // value for the currentUser name at Profile component
   const [email, setEmail] = useState({ email: "" }); // value for the currentUser email at Profile component
+  const [usersMoviesInput, setUsersMoviesInput] = useState("");
   //Errors
   const [registerError, setRegisterError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -178,6 +179,7 @@ function App() {
     setAddError("");
     setLoginError("");
     setRegisterError("");
+    setUsersMoviesInput("");
     history.push("/sign-in");
     window.location.reload("/sign-in"); //reload the page
   };
@@ -223,6 +225,10 @@ function App() {
     setTimeout(() => {
       setIsLoading(false);
     }, 900);
+  }
+
+  function filterUsersMovies() {
+    setUsersMoviesInput(savedMovies);
   }
 
   const handleAddMovie = (data) => {
@@ -349,15 +355,16 @@ function App() {
               exact
               path="/saved-movies"
               savedFilterMovies={
-                checkShortCut
-                  ? filtrationMovies(filtrationShort(savedMovies, movie))
-                  : movie
-                  ? filtrationMovies(savedMovies, movie)
+                usersMoviesInput && checkShortCut
+                  ? filtrationMovies(filtrationShort(savedMovies, usersMoviesInput))
+                  : usersMoviesInput
+                  ? filtrationMovies(savedMovies, usersMoviesInput)
                   : checkShortCut
                   ? filtrationShort(savedMovies)
                   : savedMovies
               }
               component={SavedMovies}
+              filterUsersMovies={filterUsersMovies}
               checkShortCut={checkShortCut}
               onPopupOpen={handleOpenPopup}
               isOpen={isPopupNavigatorOpen}
