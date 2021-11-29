@@ -47,19 +47,7 @@ class MainApi {
       method: "POST",
       credentials: "include",
       headers: this._headers,
-      body: JSON.stringify({
-        country: data.country,
-        director: data.director,
-        duration: data.duration,
-        year: data.year,
-        description: data.description,
-        image: data.image,
-        trailer: data.trailer,
-        thumbnail: data.thumbnail,
-        movieId: data.movieId,
-        nameRU: data.nameRU,
-        nameEN: data.nameEN,
-      }),
+      body: JSON.stringify(data),
     }).then(this._handleResponse);
   }
 

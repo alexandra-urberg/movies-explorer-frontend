@@ -7,9 +7,8 @@ function MoviesCardList({
   firtsSearch,
   handleAddMovie,
   handleDeleteMovie,
-  location,
-  handleDelete,
-  removeCard
+  savedMovies,
+  isSaved,
 }) {
   const [visiableMax, setVisiableMax] = useState(12);
   const [visiableMed, setVisiableMed] = useState(8);
@@ -32,7 +31,7 @@ function MoviesCardList({
       return prevValue + 2;
     });
   }
-  console.log(location.pathname);
+
   return (
     <div className="moviesCardList">
       <span
@@ -53,6 +52,8 @@ function MoviesCardList({
                 key={movie.id}
                 handleAddMovie={handleAddMovie}
                 handleDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+                isSaved={isSaved}
               />
             );
           })}
@@ -76,6 +77,8 @@ function MoviesCardList({
                 key={movie.id}
                 handleAddMovie={handleAddMovie}
                 handleDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+                isSaved={isSaved}
               />
             );
           })}
@@ -99,8 +102,8 @@ function MoviesCardList({
                 key={movie.id}
                 handleAddMovie={handleAddMovie}
                 handleDeleteMovie={handleDeleteMovie}
-                handleDelete={handleDelete}
-                removeCard={removeCard}
+                savedMovies={savedMovies}
+                isSaved={isSaved}
               />
             );
           })}

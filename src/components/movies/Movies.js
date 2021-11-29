@@ -27,6 +27,9 @@ function Movies(props) {
           firtsSearch={props.firtsSearch}
           handleAddMovie={props.handleAddMovie}
           location={props.location}
+          handleDeleteMovie={props.handleDeleteMovie}
+          savedMovies={props.savedMovies}
+          isSaved={false}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

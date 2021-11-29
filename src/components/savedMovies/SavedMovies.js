@@ -24,11 +24,11 @@ function SavedMovies(props) {
           <span className="moviesCardList__error-text">{props.textError}</span>
         )}
         <MoviesCardList
-          filterMovie={props.savedFilterMovies}
+          filterMovie={props.filterMovie}
           location={props.location}
           handleDeleteMovie={props.handleDeleteMovie}
-          handleDelete={props.handleDelete}
-          removeCard={props.removedCard}
+          isSaved={true}
+          savedMovies={props.savedMovies}
         />
         <PopupNavigator isOpen={props.isOpen} onClose={props.onClose} />
       </main>

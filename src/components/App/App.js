@@ -33,7 +33,6 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [shortCut, setShortCut] = useState([]);
   const [filterMovie, setFilterMovie] = useState([]);
-  const [removedCard, setRemovedCard] = useState({});
   const [firtsSearch, setFirtsSearch] = useState(true);
   const [checkShortCut, setCheckShortCut] = useState("");
   //Inputs
@@ -56,9 +55,13 @@ function App() {
     if (isAuthorized) {
       setIsLoading(true);
       Promise.all([mainApi.getPersonalInformation(), mainApi.getSavedMovies()])
-        .then(([userData, cardData]) => {
+        .then(([userData, moviesData]) => {
           setCurrentUser(userData.data);
-          setSavedMovies(cardData);
+          const usersSavedMovies = moviesData.filter((movie) => {
+            return movie.owner === userData.data._id;
+          });
+          setSavedMovies(usersSavedMovies);
+          localStorage.setItem("savedMovies", JSON.stringify(usersSavedMovies));
         })
         .catch((error) => {
           if (error === 500 || "Failed to fetch")
@@ -170,6 +173,7 @@ function App() {
 
   const signOut = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("savedMovies");
     setIsAuthorized(false);
     setMovies([]);
     setFilterMovie([]);
@@ -181,7 +185,7 @@ function App() {
     setRegisterError("");
     setUsersMoviesInput("");
     history.push("/sign-in");
-    window.location.reload("/sign-in"); //reload the page
+    window.location.reload(); //reload the page
   };
   //Movie's part
   useEffect(() => {
@@ -231,12 +235,14 @@ function App() {
     setUsersMoviesInput(savedMovies);
   }
 
-  const handleAddMovie = (data) => {
+  function handleAddMovie(data) {
     setIsLoading(true);
     mainApi
       .addNewCard(data)
       .then((moviesData) => {
-        setSavedMovies([moviesData, ...savedMovies]);
+        const usersMovies = [moviesData, ...savedMovies];
+        setSavedMovies(usersMovies);
+        localStorage.setItem("savedMovies", JSON.stringify(usersMovies));
       })
       .catch((error) => {
         if (error === 500 || "Failed to fetch") {
@@ -250,17 +256,18 @@ function App() {
       .finally(() => {
         setTimeout(() => setIsLoading(false), 700);
       });
-  };
+  }
 
-  const handleDeleteMovie = (movie) => {
+  function handleDeleteMovie(movieId) {
     setIsLoading(true);
-    console.log(movie);
-    console.log(movie._id);
-    console.log(movie.id);
     mainApi
-      .deleteCard(movie._id)
+      .deleteCard(movieId)
       .then(() => {
-        setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
+        const moviesList = savedMovies.filter(
+          (m) => m._id !== movieId && movie
+        );
+        setSavedMovies(moviesList);
+        localStorage.setItem("savedMovies", JSON.stringify(moviesList));
       })
       .catch((error) => {
         if (error === 500 || "Failed to fetch") {
@@ -272,12 +279,8 @@ function App() {
         }
       })
       .finally(() => {
-        setTimeout(() => setIsLoading(false), 700);
+        setTimeout(() => setIsLoading(false), 800);
       });
-  };
-
-  const handleDelete = (movie) => {
-    setRemovedCard(movie);
   }
 
   useEffect(() => {
@@ -350,12 +353,14 @@ function App() {
               loggedIn={isAuthorized}
               firtsSearch={firtsSearch}
               handleAddMovie={handleAddMovie}
+              handleDeleteMovie={handleDeleteMovie}
+              savedMovies={savedMovies}
               location={location}
             />
             <ProtectedRoute
               exact
               path="/saved-movies"
-              savedFilterMovies={
+              filterMovie={
                 usersMoviesInput && checkShortCut
                   ? filtrationMovies(
                       filtrationShort(savedMovies, usersMoviesInput)
@@ -367,6 +372,7 @@ function App() {
                   : savedMovies
               }
               component={SavedMovies}
+              savedMovies={savedMovies}
               filterUsersMovies={filterUsersMovies}
               checkShortCut={checkShortCut}
               onPopupOpen={handleOpenPopup}
@@ -375,8 +381,6 @@ function App() {
               isLoading={isLoading}
               loggedIn={isAuthorized}
               handleDeleteMovie={handleDeleteMovie}
-              handleDelete={handleDelete}
-              removeCard={removedCard}
               textError={addError}
               checkingShortCut={checkingShortCut}
               movie={movie}

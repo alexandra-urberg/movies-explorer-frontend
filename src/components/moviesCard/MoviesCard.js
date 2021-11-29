@@ -1,11 +1,24 @@
-import React from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function MoviesCard({ movie, handleAddMovie, handleDeleteMovie, handleDelete, removeCard }) {
+function MoviesCard({
+  movie,
+  handleAddMovie,
+  handleDeleteMovie,
+  isSaved,
+  savedMovies,
+}) {
   const location = useLocation();
+  const [onClicked, setOnClicked] = useState(false);
+  const currentUser = useContext(CurrentUserContext);
+  const movieVariation = savedMovies.find(
+    (m) => m.nameRU === movie.nameRU && m.owner === currentUser._id
+  );
+  const removedMovie = savedMovies.find((m) => m.movieId === String(movie.id));
 
   const movieData = {
-    movieId: movie.id || movie._id,
+    movieId: String(movie.id),
     country: movie.country || "Нет информации",
     director: movie.director || "Нет информации",
     year: movie.year || "Нет информации",
@@ -15,26 +28,32 @@ function MoviesCard({ movie, handleAddMovie, handleDeleteMovie, handleDelete, re
     duration: movie.duration || 0,
     image:
       `https://api.nomoreparties.co${movie.image.url}` ||
-      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2258&q=80",
-    trailer: movie.trailer || "https://www.youtube.com",
-    thumbnail:
-      movie.thumbnail ||
-      "https://images.unsplash.com/photo-1594322436404-5a0526db4d13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2258&q=80",
+      "https://www.youtube.com/",
+    trailer: movie.trailerLink || "https://www.youtube.com/",
+    thumbnail: isSaved
+      ? movie.thumbnail
+      : `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
   };
 
-  function onAddMovie(e) {
-    e.preventDefault();
-    handleAddMovie(movieData);
+  function onAddDeleteMovie() {
+    if (onClicked) {
+      handleDeleteMovie(removedMovie._id);
+    } else if (!onClicked) {
+      handleAddMovie(movieData);
+    }
+    setOnClicked(!onClicked);
   }
 
   function onDeleteMovie(e) {
     e.preventDefault();
-    handleDeleteMovie(removeCard);
+    handleDeleteMovie(movie._id);
   }
 
-  const handleRemoveCard = () => {//обработчик передающий информауию от card в Main для открытия popup delete card, а также передает всю нужную информацию в App для удаления карточки 
-    handleDelete(movie);
-}
+  useEffect(() => {
+    if (movieVariation) {
+      setOnClicked(true);
+    }
+  }, [movieVariation]);
 
   return (
     <li key={movie.movieId} className="card">
@@ -48,22 +67,20 @@ function MoviesCard({ movie, handleAddMovie, handleDeleteMovie, handleDelete, re
           }`}</p>
         </div>
         <button
-        onSubmit={onDeleteMovie}
-          onClick={location.pathname === "/movies" ? onAddMovie : handleRemoveCard}
+          type="button"
+          onClick={isSaved ? onDeleteMovie : onAddDeleteMovie}
           className={`
                     ${
-                      location.pathname === "/movies"
+                      isSaved
+                        ? "card__button-delete"
+                        : onClicked
                         ? "card__btton-add"
-                        : location.pathname === "/movies"
-                        ? "card__button"
-                        : "card__button-delete"
+                        : "card__button"
                     }`}
         />
       </div>
       <a
-        href={`${
-          location.pathname === "/movies" ? movie.trailerLink : movie.trailer
-        }`}
+        href={isSaved ? movie.trailer : movie.trailerLink}
         className="card-link"
         target="blank"
       >
