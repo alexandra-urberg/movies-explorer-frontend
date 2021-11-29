@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import React from "react";
 import { useLocation } from "react-router";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function MoviesCard({
   movie,
@@ -10,12 +9,8 @@ function MoviesCard({
   savedMovies,
 }) {
   const location = useLocation();
-  const [onClicked, setOnClicked] = useState(false);
-  const currentUser = useContext(CurrentUserContext);
-  const movieVariation = savedMovies.find(
-    (m) => m.nameRU === movie.nameRU && m.owner === currentUser._id
-  );
-  const removedMovie = savedMovies.find((m) => m.movieId === String(movie.id));
+  let onClicked = false;
+  let savedMovie;
 
   const movieData = {
     movieId: String(movie.id),
@@ -35,25 +30,15 @@ function MoviesCard({
       : `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
   };
 
-  function onAddDeleteMovie() {
-    if (onClicked) {
-      handleDeleteMovie(removedMovie._id);
-    } else if (!onClicked) {
-      handleAddMovie(movieData);
-    }
-    setOnClicked(!onClicked);
+  if (savedMovies) {
+    onClicked = savedMovies.some((usersMovie) => {
+      if (usersMovie.movieId === String(movie.id)) {
+        savedMovie = usersMovie._id;
+        return true;
+      }
+      return false;
+    });
   }
-
-  function onDeleteMovie(e) {
-    e.preventDefault();
-    handleDeleteMovie(movie._id);
-  }
-
-  useEffect(() => {
-    if (movieVariation) {
-      setOnClicked(true);
-    }
-  }, [movieVariation]);
 
   return (
     <li key={movie.movieId} className="card">
@@ -68,7 +53,10 @@ function MoviesCard({
         </div>
         <button
           type="button"
-          onClick={isSaved ? onDeleteMovie : onAddDeleteMovie}
+          onClick={() =>
+            onClicked || movie._id
+              ? handleDeleteMovie(movie._id ? movie._id : savedMovie)
+              : handleAddMovie(movieData)}
           className={`
                     ${
                       isSaved
