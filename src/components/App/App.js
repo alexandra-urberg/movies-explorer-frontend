@@ -184,7 +184,7 @@ function App() {
     setLoginError("");
     setRegisterError("");
     setUsersMoviesInput("");
-    history.push("/sign-in");
+    history.push("/");
     window.location.reload(); //reload the page
   };
   //Movie's part
@@ -406,7 +406,7 @@ function App() {
             />
             <Route exact path="/sign-up">
               {isRegistered ? (
-                <Redirect to="/sign-in" />
+                <Redirect to="/movies" />
               ) : (
                 <Register
                   registerError="registerError"
