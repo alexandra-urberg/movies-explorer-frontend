@@ -50,18 +50,6 @@ function App() {
   let history = useHistory();
   const location = useLocation();
   //User's part
-  useEffect(() => {
- if(isAuthorized) {
-         const moviesList = localStorage.getItem('movies').JSON.parse(movies);
-      setMovies(moviesList)
-      const usersList = localStorage.setItem('savedMovies').JSON.stringify(savedMovies);
-      setSavedMovies(usersList);
-      const filteredShortCut = localStorage.setItem('filteredShortMovies').JSON.stringify(shortCut);
-      setShortCut(filteredShortCut)
-      const filtMovies = localStorage.setItem('filteredMovies').JSON.stringify(filterMovie);
-      setFilterMovie(filtMovies);
- }
-  }, [movies, savedMovies, shortCut,filterMovie, isAuthorized])
 
   useEffect(() => {
     //information about user and user's movies
@@ -110,6 +98,28 @@ function App() {
   useEffect(() => {
     tockenCheck();
   }, [tockenCheck]);
+
+  useEffect(() => {
+    if(tockenCheck) {
+         const moviesList = localStorage.getItem('movies');
+         const usersList = localStorage.setItem('savedMovies')
+         const filteredShortCut = localStorage.setItem('filteredShortMovies')
+         const filtMovies = localStorage.setItem('filteredMovies')
+         if(moviesList) {
+           const list = JSON.parse(movies)
+           setMovies(list)
+         } if(usersList) {
+           const savedList = JSON.parse(savedMovies);
+           setSavedMovies(savedList);
+         }if(filteredShortCut) {
+           const shotCutList = JSON.parse(shortCut)
+           setShortCut(shotCutList)
+         } if(filtMovies) {
+           const filteredFilms = JSON.parse(filterMovie)
+           setFilterMovie(filteredFilms);
+         }
+    }
+     }, [movies, savedMovies, shortCut,filterMovie, tockenCheck])
 
   const handleRegistration = (data) => {
     setIsLoading(true);
