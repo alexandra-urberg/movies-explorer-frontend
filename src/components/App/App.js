@@ -102,9 +102,9 @@ function App() {
   useEffect(() => {
     if(tockenCheck) {
          const moviesList = localStorage.getItem('movies');
-         const usersList = localStorage.setItem('savedMovies')
-         const filteredShortCut = localStorage.setItem('filteredShortMovies')
-         const filtMovies = localStorage.setItem('filteredMovies')
+         const usersList = localStorage.getItem('savedMovies')
+         const filteredShortCut = localStorage.getItem('filteredShortMovies')
+         const filtMovies = localStorage.getItem('filteredMovies')
          if(moviesList) {
            const list = JSON.parse(movies)
            setMovies(list)
