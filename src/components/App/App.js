@@ -51,8 +51,8 @@ function App() {
   const location = useLocation();
   //User's part
   useEffect(() => {
-    function addToLocalStorage() {
-      const moviesList = localStorage.getItem('movies').JSON.parse(movies);
+ if(isAuthorized) {
+         const moviesList = localStorage.getItem('movies').JSON.parse(movies);
       setMovies(moviesList)
       const usersList = localStorage.setItem('savedMovies').JSON.stringify(savedMovies);
       setSavedMovies(usersList);
@@ -60,9 +60,8 @@ function App() {
       setShortCut(filteredShortCut)
       const filtMovies = localStorage.setItem('filteredMovies').JSON.stringify(filterMovie);
       setFilterMovie(filtMovies);
-    }
-    addToLocalStorage();
-  }, [movies, savedMovies, shortCut,filterMovie])
+ }
+  }, [movies, savedMovies, shortCut,filterMovie, isAuthorized])
 
   useEffect(() => {
     //information about user and user's movies
@@ -90,6 +89,7 @@ function App() {
 
   const tockenCheck = useCallback(() => {
     const jwt = localStorage.getItem("jwt");
+    
     if (jwt) {
       auth
         .checkToken(jwt)
