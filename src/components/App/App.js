@@ -51,6 +51,20 @@ function App() {
   const location = useLocation();
   //User's part
   useEffect(() => {
+    function addToLocalStorage() {
+      const moviesList = localStorage.getItem('movies').JSON.parse(movies);
+      setMovies(moviesList)
+      const usersList = localStorage.setItem('savedMovies').JSON.stringify(savedMovies);
+      setSavedMovies(usersList);
+      const filteredShortCut = localStorage.setItem('filteredShortMovies').JSON.stringify(shortCut);
+      setShortCut(filteredShortCut)
+      const filtMovies = localStorage.setItem('filteredMovies').JSON.stringify(filterMovie);
+      setFilterMovie(filtMovies);
+    }
+    addToLocalStorage();
+  }, [movies, savedMovies, shortCut,filterMovie])
+
+  useEffect(() => {
     //information about user and user's movies
     if (isAuthorized) {
       setIsLoading(true);
@@ -175,6 +189,9 @@ function App() {
   const signOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("savedMovies");
+    localStorage.removeItem("movies");
+    localStorage.removeItem("filteredShortMovies");
+    localStorage.removeItem("filteredMovies");
     setIsAuthorized(false);
     setMovies([]);
     setFilterMovie([]);
@@ -226,6 +243,8 @@ function App() {
     setIsLoading(true);
     setFilterMovie(filterMovies);
     setShortCut(filterShortCards);
+    localStorage.setItem("filteredMovies", JSON.stringify(filterMovies));
+    localStorage.setItem("filteredShortMovies", JSON.stringify(filterShortCards));
     setFirtsSearch(false);
     setTimeout(() => {
       setIsLoading(false);
