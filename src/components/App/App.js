@@ -50,7 +50,6 @@ function App() {
   let history = useHistory();
   const location = useLocation();
   //User's part
-
   useEffect(() => {
     //information about user and user's movies
     if (isAuthorized) {
@@ -77,7 +76,7 @@ function App() {
 
   const tockenCheck = useCallback(() => {
     const jwt = localStorage.getItem("jwt");
-    
+
     if (jwt) {
       auth
         .checkToken(jwt)
@@ -232,7 +231,10 @@ function App() {
     setFilterMovie(filterMovies);
     setShortCut(filterShortCards);
     localStorage.setItem("filteredMovies", JSON.stringify(filterMovies));
-    localStorage.setItem("filteredShortMovies", JSON.stringify(filterShortCards));
+    localStorage.setItem(
+      "filteredShortMovies",
+      JSON.stringify(filterShortCards)
+    );
     setFirtsSearch(false);
     setTimeout(() => {
       setIsLoading(false);
@@ -273,7 +275,7 @@ function App() {
       .deleteCard(movieId)
       .then(() => {
         const moviesList = savedMovies.filter(
-          (m) => m._id !== movieId && movie
+          (m) => m._id !== movieId
         );
         setSavedMovies(moviesList);
         setSuccessText("Фильм успешно удален");
