@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Form(props) {
   return (
-    <main className="form">
+    <main className="form__section">
       <div className="form__head">
         <Link to="/">
           <div className="form__logo background-color"></div>

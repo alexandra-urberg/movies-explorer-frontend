@@ -8,7 +8,7 @@ function Login({
   onAuthorization,
   isLoading,
 }) {
-  const { values, handleChange, errors, isValid } = useFormValidation();
+  const { values, handleChange, errors, isValid, resetForm } = useFormValidation();
 
   function handleChangeInput(e) {
     handleChange(e);
@@ -25,13 +25,14 @@ function Login({
       email: values.email,
       password: values.password,
     });
+    resetForm();
   }
 
   return (
     <Form
       onSubmit={handleSubmit}
       header="Рады видеть!"
-      errors={errors.email || errors.password}
+      errors={!isValid}
       disabled={!isValid}
       path="/profile"
       input={userLoginInput}
@@ -41,6 +42,7 @@ function Login({
       link="/sign-up"
       linkTitle=" Регистрация"
     >
+      <div className="form">
       <label className="form__label">
         <h2 className="form__description">E-mail</h2>
         <input
@@ -67,7 +69,7 @@ function Login({
           id="password"
           name="password"
           type="password"
-          minLength="6"
+          minLength="8"
           autoComplete="on"
           className="form__password form__input"
           onChange={handleChangeInput}
@@ -76,6 +78,7 @@ function Login({
           {errors.password}
         </span>
       </label>
+      </div>
       {isLoading && <Preloader />}
     </Form>
   );
