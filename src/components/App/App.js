@@ -99,28 +99,6 @@ function App() {
     tockenCheck();
   }, [tockenCheck]);
 
-  useEffect(() => {
-    if(tockenCheck) {
-         const moviesList = localStorage.getItem('movies');
-         const usersList = localStorage.getItem('savedMovies')
-         const filteredShortCut = localStorage.getItem('filteredShortMovies')
-         const filtMovies = localStorage.getItem('filteredMovies')
-         if(moviesList) {
-           const list = JSON.parse(movies)
-           setMovies(list)
-         } if(usersList) {
-           const savedList = JSON.parse(savedMovies);
-           setSavedMovies(savedList);
-         }if(filteredShortCut) {
-           const shotCutList = JSON.parse(shortCut)
-           setShortCut(shotCutList)
-         } if(filtMovies) {
-           const filteredFilms = JSON.parse(filterMovie)
-           setFilterMovie(filteredFilms);
-         }
-    }
-     }, [movies, savedMovies, shortCut,filterMovie, tockenCheck])
-
   const handleRegistration = (data) => {
     setIsLoading(true);
     auth
