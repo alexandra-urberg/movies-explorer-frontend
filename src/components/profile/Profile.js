@@ -12,16 +12,16 @@ function Profile(props) {
 
   function handleChangeInput(e) {
     handleChange(e);
-    if (props.userInput.length > 0) {
-      props.setUserInput("");
+    if (props.userUpdateError.length > 0) {
+      props.setUserUpdateError("");
+    } else if (props.successText.length > 0) {
+      props.setSuccessText("");
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault(); //Запрещаем браузеру переходить по адресу формы
-
     props.onUpdate({
-      //Передаём значения управляемых компонентов во внешний обработчик
       name: values.name,
       email: values.email,
     });
@@ -30,8 +30,7 @@ function Profile(props) {
 
   useEffect(() => {
     // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
-    setValues(currentUser.name);
-    setValues(currentUser.email);
+    setValues(currentUser);
   }, [currentUser, setValues]);
 
   return (
@@ -39,11 +38,11 @@ function Profile(props) {
       <Header onPopupOpen={props.onPopupOpen} />
       <main className="profile">
         <h1 className="profile__title">Привет, {props.currentUser.name}!</h1>
-        <form className="profile__box" onSubmit={handleSubmit}>
+        <form className="profile__box form" onSubmit={handleSubmit}>
           <label className="profile__label">
             <h2 className="profile__description">Имя</h2>
             <input
-              placeholder={props.currentUser.name}
+              placeholder="Введите новое имя"
               required
               id="name"
               value={values.name}
@@ -62,7 +61,7 @@ function Profile(props) {
           <label className="profile__label">
             <h2 className="profile__description">E-mail</h2>
             <input
-              placeholder={props.currentUser.email}
+              placeholder="Введите новый email"
               required
               pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
               value={values.email}
@@ -78,17 +77,21 @@ function Profile(props) {
             </span>
           </label>
           {props.isLoading && <Preloader />}
-          <span className="profile__input-error profile__margin">
-            {props.userInput}
+          <span
+            className={`profile__margin ${
+              props.successText
+                ? "profile__input-success"
+                : "profile__input-error"
+            }`}
+          >
+            {props.userUpdateError || props.successText}
           </span>
           <button
             type="submit"
             className={`profile__button profile__button-text ${
-              errors.name || errors.email || null
-                ? "form__button_disabled"
-                : null
+              !isValid ? "form__button_disabled" : null
             }`}
-            disabled={!isValid || null}
+            disabled={!isValid}
           >
             Редактировать
           </button>
@@ -103,3 +106,4 @@ function Profile(props) {
 }
 
 export default Profile;
+

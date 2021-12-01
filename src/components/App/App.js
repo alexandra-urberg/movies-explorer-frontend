@@ -25,9 +25,9 @@ import NotFound from "../notFound/NotFound";
 function App() {
   //User's
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [successText, setSuccessText] = useState("");
   //Movie's
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
@@ -102,8 +102,8 @@ function App() {
     auth
       .registration(data)
       .then(() => {
-        setIsRegistered(true);
-        history.push("/sign-in");
+        setIsAuthorized(true);
+        history.push("/movies");
       })
       .catch((error) => {
         setIsAuthorized(false);
@@ -156,6 +156,7 @@ function App() {
           email: res.data.email,
         });
         history.push(location.pathname);
+        setSuccessText("Информация успешно обновленна");
       })
       .catch((error) => {
         if (error === 500 || "Failed to fetch")
@@ -242,6 +243,7 @@ function App() {
       .then((moviesData) => {
         const usersMovies = [moviesData, ...savedMovies];
         setSavedMovies(usersMovies);
+        setSuccessText("Фильм успешно добавлен");
         localStorage.setItem("savedMovies", JSON.stringify(usersMovies));
       })
       .catch((error) => {
@@ -267,6 +269,7 @@ function App() {
           (m) => m._id !== movieId && movie
         );
         setSavedMovies(moviesList);
+        setSuccessText("Фильм успешно удален");
         localStorage.setItem("savedMovies", JSON.stringify(moviesList));
       })
       .catch((error) => {
@@ -356,6 +359,7 @@ function App() {
               handleDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
               location={location}
+              successText={successText}
             />
             <ProtectedRoute
               exact
@@ -386,6 +390,7 @@ function App() {
               movie={movie}
               setMovie={setMovie}
               location={location}
+              successText={successText}
             />
             <ProtectedRoute
               exact
@@ -396,22 +401,25 @@ function App() {
               onSignOut={signOut}
               name={name}
               email={email}
-              textError={userUpdateError}
+              userUpdateError={userUpdateError}
+              setUserUpdateError={setUserUpdateError}
               isOpen={isPopupNavigatorOpen}
               onClose={closePopup}
               loggedIn={isAuthorized}
               currentUser={currentUser}
               isLoading={isLoading}
               checkingShortCut={checkingShortCut}
+              successText={successText}
+              setSuccessText={setSuccessText}
             />
             <Route exact path="/sign-up">
-              {isRegistered ? (
+              {isAuthorized ? (
                 <Redirect to="/movies" />
               ) : (
                 <Register
                   registerError="registerError"
                   isLoading={isLoading}
-                  isRegistered={isRegistered}
+                  isRegistered={isAuthorized}
                   onRegistered={handleRegistration}
                   userRegisterInput={registerError}
                   setUserRegisterInput={setRegisterError}
