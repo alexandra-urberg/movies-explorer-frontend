@@ -98,13 +98,13 @@ function App() {
     tockenCheck();
   }, [tockenCheck]);
 
-  const handleRegistration = (data) => {
+  const handleRegistration = ({name, email, password}) => {
     setIsLoading(true);
     auth
-      .registration(data)
+      .registration({name, email, password})
       .then((res) => {
         if(res) {
-          handleAuthorization(data);
+          handleAuthorization({email, password});
         } else {
           Promise.reject(`Ошибка ${res.status}`)
         }
