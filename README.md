@@ -2,7 +2,10 @@
 
 This is the final project/diploma for Yandex-Practicum Bootcamp(frontend version)
 
+**Figma Layout example: https://www.figma.com/file/cASM20ikAsPlTi2doec68Q/Diploma?node-id=344%3A0**
+
 **Frontend version : https://diploma.nomoredomains.rocks**
+
 **Backend version: https://api.nomoredomains.diploma.nomoredomains.rocks**
 
 **Publick IP 84.201.164.95**
