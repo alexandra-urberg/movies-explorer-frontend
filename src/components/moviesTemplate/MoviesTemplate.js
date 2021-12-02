@@ -7,7 +7,7 @@ function MoviesTemplate({
   movie,
   setMovie,
   location,
-  checkShortCut
+  checkShortCut,
 }) {
   const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
@@ -15,7 +15,7 @@ function MoviesTemplate({
     const { value } = e.target;
     setMovie(value);
 
-    if (value.length < 1) {
+    if (!value.length) {
       setValidationErrors("Нужно ввести ключевое слово");
     } else {
       return setValidationErrors("");
@@ -48,19 +48,24 @@ function MoviesTemplate({
           <input
             onChange={handleChangeMovie}
             type="text"
-            value={movie || ""}
+            value={movie}
             name="movie"
             className="moviesTemplate__input moviesTemplate__input-size moviesTemplate__image"
             placeholder="Введите название фильма"
             required
           />
-          <button className="moviesTemplate__button"></button>
+          <button
+            className={`moviesTemplate__button ${
+              !movie.length ? "form__button_disabled" : null
+            }`}
+            disable={!movie.length}
+          ></button>
           <div className="moviesTemplate__div"></div>
           <span className={`${validationErrors ? "form__input-error" : null}`}>
             {validationErrors}
           </span>
-          </label>
-          <label className="moviesTemplate__search">
+        </label>
+        <label className="moviesTemplate__search">
           <h2 className="moviesTemplate__title">Короткометражки</h2>
           <input
             type="checkbox"
@@ -83,7 +88,6 @@ function MoviesTemplate({
             ></span>
           </span>
         </label>
-
       </form>
     </div>
   );

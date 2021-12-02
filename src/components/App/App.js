@@ -242,7 +242,7 @@ function App() {
   }
 
   function filterUsersMovies() {
-    setUsersMoviesInput(savedMovies);
+    setUsersMoviesInput(movie);
   }
 
   function handleAddMovie(data) {
@@ -252,7 +252,6 @@ function App() {
       .then((moviesData) => {
         const usersMovies = [moviesData, ...savedMovies];
         setSavedMovies(usersMovies);
-        setSuccessText("Фильм успешно добавлен");
         localStorage.setItem("savedMovies", JSON.stringify(usersMovies));
       })
       .catch((error) => {
@@ -274,11 +273,8 @@ function App() {
     mainApi
       .deleteCard(movieId)
       .then(() => {
-        const moviesList = savedMovies.filter(
-          (m) => m._id !== movieId
-        );
+        const moviesList = savedMovies.filter((m) => m._id !== movieId);
         setSavedMovies(moviesList);
-        setSuccessText("Фильм успешно удален");
         localStorage.setItem("savedMovies", JSON.stringify(moviesList));
       })
       .catch((error) => {
@@ -297,6 +293,7 @@ function App() {
 
   useEffect(() => {
     setAddError("");
+    setSuccessText("");
   }, [movies, location]);
 
   //Open/close navigation when page's size max-width 840px
@@ -368,7 +365,7 @@ function App() {
               handleDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
               location={location}
-              successText={successText}
+              checkShortCut={checkShortCut}
             />
             <ProtectedRoute
               exact
@@ -379,7 +376,7 @@ function App() {
                       filtrationShort(savedMovies, usersMoviesInput)
                     )
                   : usersMoviesInput
-                  ? filtrationMovies(savedMovies, usersMoviesInput)
+                  ? filtrationMovies(savedMovies)
                   : checkShortCut
                   ? filtrationShort(savedMovies)
                   : savedMovies
@@ -399,7 +396,6 @@ function App() {
               movie={movie}
               setMovie={setMovie}
               location={location}
-              successText={successText}
             />
             <ProtectedRoute
               exact

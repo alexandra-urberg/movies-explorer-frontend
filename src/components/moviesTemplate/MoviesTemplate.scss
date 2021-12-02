@@ -104,8 +104,9 @@
 
 .moviesTemplate__search {
   display: flex;
-  align-items: center;
+  padding-top: 15px;
   @media screen and (max-width: 1065px) {
+    padding-top: 0;
     align-self: center;
   }
 }
