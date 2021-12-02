@@ -102,8 +102,8 @@ function App() {
     setIsLoading(true);
     auth
       .registration(data)
-      .then(() => {
-        setIsAuthorized(true);
+      .then((data) => {
+        handleAuthorization(data);
         history.push("/movies");
       })
       .catch((error) => {
