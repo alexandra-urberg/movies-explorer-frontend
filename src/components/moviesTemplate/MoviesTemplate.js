@@ -7,6 +7,7 @@ function MoviesTemplate({
   movie,
   setMovie,
   location,
+  checkShortCut
 }) {
   const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
@@ -58,15 +59,31 @@ function MoviesTemplate({
           <span className={`${validationErrors ? "form__input-error" : null}`}>
             {validationErrors}
           </span>
-        </label>
-        <label className="moviesTemplate__search moviesTemplate__checkbox">
-          <h1 className="moviesTemplate__title">Короткометражки</h1>
-          <input className="moviesTemplate__input" type="checkbox" />
-          <span
-            className="moviesTemplate__checkbox-switch"
+          </label>
+          <label className="moviesTemplate__search">
+          <h2 className="moviesTemplate__title">Короткометражки</h2>
+          <input
+            type="checkbox"
+            className="moviesTemplate__filter-box"
             onClick={onFilter}
-          ></span>
+          />
+          <span
+            className={
+              checkShortCut
+                ? "moviesTemplate__check-button"
+                : "moviesTemplate__check-button moviesTemplate__secret-button"
+            }
+          >
+            <span
+              className={
+                checkShortCut
+                  ? "moviesTemplate__circle"
+                  : "moviesTemplate__circle moviesTemplate__secret-circle"
+              }
+            ></span>
+          </span>
         </label>
+
       </form>
     </div>
   );

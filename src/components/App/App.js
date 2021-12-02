@@ -34,7 +34,7 @@ function App() {
   const [shortCut, setShortCut] = useState([]);
   const [filterMovie, setFilterMovie] = useState([]);
   const [firtsSearch, setFirtsSearch] = useState(true);
-  const [checkShortCut, setCheckShortCut] = useState("");
+  const [checkShortCut, setCheckShortCut] = useState(false);
   //Inputs
   const [movie, setMovie] = useState("");
   const [name, setName] = useState({ name: "" }); // value for the currentUser name at Profile component

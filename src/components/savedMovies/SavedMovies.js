@@ -17,6 +17,7 @@ function SavedMovies(props) {
           movie={props.movie}
           setMovie={props.setMovie}
           location={props.location}
+          checkShortCut={props.checkShortCut}
         />
         {props.isLoading ? (
           <Preloader />
