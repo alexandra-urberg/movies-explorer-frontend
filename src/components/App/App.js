@@ -102,9 +102,12 @@ function App() {
     setIsLoading(true);
     auth
       .registration(data)
-      .then((data) => {
-        handleAuthorization(data);
-        history.push("/movies");
+      .then((res) => {
+        if(res) {
+          handleAuthorization(data);
+        } else {
+          Promise.reject(`Ошибка ${res.status}`)
+        }
       })
       .catch((error) => {
         setIsAuthorized(false);
