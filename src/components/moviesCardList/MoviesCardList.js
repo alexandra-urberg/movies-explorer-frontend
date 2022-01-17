@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MediaQuery from "react-responsive";
-import MoviesCard from "../moviesCard/MoviesCard";
+import MoviesCardListTemplate from "../moviesCardListTemplate/MoviesCardListTemplate";
 
 function MoviesCardList({
   filterMovie,
@@ -44,20 +44,13 @@ function MoviesCardList({
         {"Ничего не найденно"}
       </span>
       <MediaQuery minWidth={1280}>
-        <ul className="moviesCardList__container">
-          {filterMovie.slice(0, visiableMax).map((movie) => {
-            return (
-              <MoviesCard
-                movie={movie}
-                key={movie.id}
-                handleAddMovie={handleAddMovie}
-                handleDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-                isSaved={isSaved}
-              />
-            );
-          })}
-        </ul>
+        <MoviesCardListTemplate
+          windowSize={visiableMax}
+          handleAddMovie={handleAddMovie}
+          handleDeleteMovie={handleDeleteMovie}
+          savedMovies={savedMovies}
+          isSaved={isSaved}
+        />
         {visiableMax < filterMovie.length && (
           <button
             type="submit"
@@ -69,20 +62,13 @@ function MoviesCardList({
         )}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
-        <ul className="moviesCardList__container">
-          {filterMovie.slice(0, visiableMed).map((movie) => {
-            return (
-              <MoviesCard
-                movie={movie}
-                key={movie.id}
-                handleAddMovie={handleAddMovie}
-                handleDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-                isSaved={isSaved}
-              />
-            );
-          })}
-        </ul>
+        <MoviesCardListTemplate
+          windowSize={visiableMed}
+          handleAddMovie={handleAddMovie}
+          handleDeleteMovie={handleDeleteMovie}
+          savedMovies={savedMovies}
+          isSaved={isSaved}
+        />
         {visiableMed < filterMovie.length && (
           <button
             type="button"
@@ -94,20 +80,13 @@ function MoviesCardList({
         )}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
-        <ul className="moviesCardList__container">
-          {filterMovie.slice(0, visiableMin).map((movie) => {
-            return (
-              <MoviesCard
-                movie={movie}
-                key={movie.id}
-                handleAddMovie={handleAddMovie}
-                handleDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-                isSaved={isSaved}
-              />
-            );
-          })}
-        </ul>
+        <MoviesCardListTemplate
+          windowSize={visiableMin}
+          handleAddMovie={handleAddMovie}
+          handleDeleteMovie={handleDeleteMovie}
+          savedMovies={savedMovies}
+          isSaved={isSaved}
+        />
         {visiableMin < filterMovie.length && (
           <button
             type="submit"
