@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MediaQuery from "react-responsive";
 import MoviesCardListTemplate from "../moviesCardListTemplate/MoviesCardListTemplate";
+import MoviesCardListButton from "../moviesCardListButton/MoviesCardListButton";
 
 function MoviesCardList({
   filterMovie,
@@ -52,13 +53,7 @@ function MoviesCardList({
           isSaved={isSaved}
         />
         {visiableMax < filterMovie.length && (
-          <button
-            type="submit"
-            className="moviesCardList__button-more moviesCardList__button-text"
-            onClick={showMoreMoviesMax}
-          >
-            Еще
-          </button>
+          <MoviesCardListButton showMoreMovies={showMoreMoviesMax} />
         )}
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
@@ -70,13 +65,7 @@ function MoviesCardList({
           isSaved={isSaved}
         />
         {visiableMed < filterMovie.length && (
-          <button
-            type="button"
-            className="moviesCardList__button-more moviesCardList__button-text"
-            onClick={showMoreMoviesMed}
-          >
-            Еще
-          </button>
+          <MoviesCardListButton showMoreMovies={showMoreMoviesMed} />
         )}
       </MediaQuery>
       <MediaQuery maxWidth={480}>
@@ -88,13 +77,7 @@ function MoviesCardList({
           isSaved={isSaved}
         />
         {visiableMin < filterMovie.length && (
-          <button
-            type="submit"
-            className="moviesCardList__button-more moviesCardList__button-text"
-            onClick={showMoreMoviesMin}
-          >
-            Еще
-          </button>
+          <MoviesCardListButton showMoreMovies={showMoreMoviesMin} />
         )}
       </MediaQuery>
     </div>
