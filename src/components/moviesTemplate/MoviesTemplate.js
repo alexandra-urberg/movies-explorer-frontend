@@ -1,23 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function MoviesTemplate() {
-  const [movie, setMovie] = useState("");
-  const [validationErrors, setValidationErrors] = useState({ movie: "" }); //state of input validation
+function MoviesTemplate({
+  handleSetMovies,
+  checkingShortCut,
+  filterUsersMovies,
+  movie,
+  setMovie,
+  location,
+  checkShortCut,
+}) {
+  const [validationErrors, setValidationErrors] = useState(""); //state of input validation
 
   function handleChangeMovie(e) {
-    //Обработчик изменения инпута name обновляет стейт
     const { value } = e.target;
     setMovie(value);
 
-    if (value.length < 2) {
-      validationErrors.movie = "Нужно ввести ключевое слово";
+    if (!value.length) {
+      setValidationErrors("Нужно ввести ключевое слово");
     } else {
-      validationErrors.movie = "" && setValidationErrors(validationErrors);
+      return setValidationErrors("");
     }
   }
+
+  function handleMoviesFilter(e) {
+    e.preventDefault();
+    if (location.pathname === "/movies") {
+      handleSetMovies();
+      return;
+    } else if (location.pathname === "/saved-movies") {
+      filterUsersMovies();
+      return;
+    }
+  }
+
+  function onFilter() {
+    checkingShortCut();
+  }
+
+  useEffect(() => {
+    setMovie("");
+  }, [setMovie, location]);
+
   return (
     <div className="moviesTemplate">
-      <form className="moviesTemplate__form">
+      <form className="moviesTemplate__form" onSubmit={handleMoviesFilter}>
         <label className="moviesTemplate__label">
           <input
             onChange={handleChangeMovie}
@@ -25,24 +51,44 @@ function MoviesTemplate() {
             value={movie}
             name="movie"
             className="moviesTemplate__input moviesTemplate__input-size moviesTemplate__image"
-            placeholder="Фильмы"
+            placeholder="Введите название фильма"
             required
           />
-          <button className="moviesTemplate__button" type="submit"></button>
+          <button
+            className={`moviesTemplate__button ${
+              !movie.length ? "form__button_disabled" : null
+            }`}
+            disable={!movie.length}
+          ></button>
+          <div className="moviesTemplate__div"></div>
+          <span className={`${validationErrors ? "form__input-error" : null}`}>
+            {validationErrors}
+          </span>
+        </label>
+        <label className="moviesTemplate__search">
+          <h2 className="moviesTemplate__title">Короткометражки</h2>
+          <input
+            type="checkbox"
+            className="moviesTemplate__filter-box"
+            onClick={onFilter}
+          />
           <span
-            className={`${validationErrors.movie ? "form__input-error" : null}`}
+            className={
+              checkShortCut
+                ? "moviesTemplate__check-button"
+                : "moviesTemplate__check-button moviesTemplate__secret-button"
+            }
           >
-            {validationErrors.movie}
+            <span
+              className={
+                checkShortCut
+                  ? "moviesTemplate__circle"
+                  : "moviesTemplate__circle moviesTemplate__secret-circle"
+              }
+            ></span>
           </span>
         </label>
       </form>
-      <div className="moviesTemplate__search">
-        <h1 className="moviesTemplate__title">Короткометражки</h1>
-        <label className="moviesTemplate__checkbox">
-          <input className="moviesTemplate__input" type="checkbox" />
-          <span className="moviesTemplate__checkbox-switch"></span>
-        </label>
-      </div>
     </div>
   );
 }

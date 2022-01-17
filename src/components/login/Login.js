@@ -1,79 +1,85 @@
-import { useState } from "react";
 import Form from "../form/Form";
+import Preloader from "../preloader/Preloader";
+import { useFormValidation } from "../../utils/hooks/useFormValidation";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [validationErrors, setValidationErrors] = useState({
-    email: "",
-    password: "",
-  }); //state of input validation
+function Login({
+  userLoginInput,
+  setuserLoginInput,
+  onAuthorization,
+  isLoading,
+}) {
+  const { values, handleChange, errors, isValid, resetForm } = useFormValidation();
 
-  function handleChangeEmail(e) {
-    const { value } = e.target;
-    setEmail(value);
-    const regEx = /.+@.+\..+/;
-
-    if (!regEx.test(value)) {
-      validationErrors.email = "Enter the correct email address";
-    } else {
-      validationErrors.email = "" && setValidationErrors(validationErrors);
+  function handleChangeInput(e) {
+    handleChange(e);
+    if (userLoginInput.length > 0) {
+      setuserLoginInput("");
     }
   }
 
-  function handleChangePassword(e) {
-    //Обработчик изменения инпута about обновляет стейт
-    const { value } = e.target;
-    setPassword(value);
+  function handleSubmit(e) {
+    e.preventDefault(); //Запрещаем браузеру переходить по адресу формы
 
-    if (value.length < 6 || value.includes("")) {
-      validationErrors.password =
-        "Enter the correct password without spaces and more than 6 symbols";
-    } else {
-      validationErrors.password = "" && setValidationErrors(validationErrors);
-    }
+    onAuthorization({
+      //Передаём значения управляемых компонентов во внешний обработчик
+      email: values.email,
+      password: values.password,
+    });
+    resetForm();
   }
+
   return (
     <Form
+      onSubmit={handleSubmit}
       header="Рады видеть!"
-      id="email"
-      title="E-mail"
-      value={email}
-      className="login__name"
-      type="email"
-      onChange={handleChangeEmail}
-      error={validationErrors.email}
-      message={validationErrors.email}
-      componentName="form__signIn"
-      errors={validationErrors.email || validationErrors.password || null}
-      disabled={validationErrors.email || validationErrors.password || null}
+      errors={!isValid}
+      disabled={!isValid}
       path="/profile"
+      input={userLoginInput}
+      component="form__signIn"
       btn="Войти"
       text="Ещё не зарегистрированы?"
       link="/sign-up"
       linkTitle=" Регистрация"
     >
+      <div className="form">
+      <label className="form__label">
+        <h2 className="form__description">E-mail</h2>
+        <input
+          required
+          id="email"
+          title="E-mail"
+          value={values.email || ""}
+          type="email"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+          onChange={handleChangeInput}
+          name="email"
+          autoComplete="on"
+          className="form__input"
+        />
+        <span className={`${errors.email ? "form__input-error" : null}`}>
+          {errors.email}
+        </span>
+      </label>
       <label className="form__label">
         <h2 className="form__description">Пароль</h2>
         <input
           required
-          value={password}
+          value={values.password || ""}
           id="password"
           name="password"
           type="password"
-          minLength="6"
+          minLength="8"
           autoComplete="on"
           className="form__password form__input"
-          onChange={handleChangePassword}
+          onChange={handleChangeInput}
         />
-        <span
-          className={`${
-            validationErrors.password ? "form__input-error" : null
-          }`}
-        >
-          {validationErrors.password}
+        <span className={`${errors.password ? "form__input-error" : null}`}>
+          {errors.password}
         </span>
       </label>
+      </div>
+      {isLoading && <Preloader />}
     </Form>
   );
 }

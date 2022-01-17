@@ -5,7 +5,10 @@ function Header(props) {
   return (
     <header className="header">
       <Link to="/" className="header__logo background-color" />
-      <Navigation onPopupOpen={props.onPopupOpen} />
+      <Navigation
+        onPopupOpen={props.onPopupOpen}
+        isAuthorized={props.isAuthorized}
+      />
     </header>
   );
 }

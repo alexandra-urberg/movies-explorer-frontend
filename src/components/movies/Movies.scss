@@ -1,6 +1,7 @@
 .movies {
-  width: 89.1%;;
+  width: 89.1%;
   margin: 0;
+  flex-grow: 1;
   @media screen and (min-width: 461px) and (max-width: 800px) {
     width: 92.2%;
   }

@@ -83,6 +83,21 @@
   color: #ff0000;
 }
 
+.profile__input-success {
+  grid-area: error-message;
+  box-sizing: border-box;
+  font-size: 0.62em;
+  line-height: 12px;
+  font-weight: 400;
+  padding-top: 10px;
+  font-style: normal;
+  color: $buttomHover;
+}
+
+.profile__margin {
+  margin-top: 24px;
+}
+
 .profile__button {
   margin: 220px auto 16px;
   border: $listStyle;

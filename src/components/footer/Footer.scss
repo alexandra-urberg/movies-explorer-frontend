@@ -7,6 +7,9 @@
   flex-shrink: 0;
   padding: 79px 70px 20px;
   background-color: #fafafa;
+  @media screen and (min-width: 1285px) {
+    background-color: inherit;
+  }
   @media screen and (min-width: 461px) and (max-width: 800px) {
     width: 92.18%;
     padding: 79px 0 20px;
@@ -80,6 +83,9 @@
   text-decoration: $listStyle;
   color: #000;
   margin-right: 20px;
+  &:hover {
+    opacity: $buttonOpaity;
+  }
   @media screen and (min-width: 320px) and (max-width: 460px) {
     font-size: $buttonFontSize;
     line-height: 14.5px;
