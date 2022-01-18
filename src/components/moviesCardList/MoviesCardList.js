@@ -46,6 +46,7 @@ function MoviesCardList({
       </span>
       <MediaQuery minWidth={1280}>
         <MoviesCardListTemplate
+          filterMovie={filterMovie}
           windowSize={visiableMax}
           handleAddMovie={handleAddMovie}
           handleDeleteMovie={handleDeleteMovie}
@@ -58,6 +59,7 @@ function MoviesCardList({
       </MediaQuery>
       <MediaQuery minWidth={481} maxWidth={1279}>
         <MoviesCardListTemplate
+          filterMovie={filterMovie}
           windowSize={visiableMed}
           handleAddMovie={handleAddMovie}
           handleDeleteMovie={handleDeleteMovie}
@@ -70,6 +72,7 @@ function MoviesCardList({
       </MediaQuery>
       <MediaQuery maxWidth={480}>
         <MoviesCardListTemplate
+          filterMovie={filterMovie}
           windowSize={visiableMin}
           handleAddMovie={handleAddMovie}
           handleDeleteMovie={handleDeleteMovie}
