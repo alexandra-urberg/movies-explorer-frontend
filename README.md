@@ -10,6 +10,10 @@ This is the final project/diploma for Yandex-Practicum Bootcamp(frontend version
 
 **Publick IP 84.201.164.95**
 
+<code><img height="500" src="https://github.com/alexandra-stepanova/movies-explorer-frontend/blob/level-3/public/%20movies_searcher.gif"></code>
+
+##
+
 This is an application written in React in a functional style. The application allows you to find and save movies as a favorites on a separate page. The movies are beiing parsed fron the other Api.
 
 Authorization is implemented utilasing cookies: to simply access the personal pages user needs to register and authorized only once. Internal routers are protected from unauthorized users. All information about movies, saved movies, filtered movies, e.t.c. is stored tored at the local storage until user log out.
