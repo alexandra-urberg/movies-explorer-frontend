@@ -4,7 +4,7 @@ This is the final project/diploma for Yandex-Practicum Bootcamp(frontend version
 
 **Figma Layout example: https://www.figma.com/file/cASM20ikAsPlTi2doec68Q/Diploma?node-id=344%3A0**
 
-**[Link to the backend https://github.com/alexandra-stepanova/movies-explorer-api](https://github.com/alexandra-stepanova/movies-explorer-api)**
+**[Link to the backend](https://github.com/alexandra-urberg/movies-explorer-api)**
 ##
 
 <code><img height="500" src="https://github.com/alexandra-stepanova/movies-explorer-frontend/blob/level-3/public/%20movies_searcher.gif"></code>
